@@ -26,96 +26,100 @@ import {
   Flex,
   Spacer,
   Skeleton,
-} from '@chakra-ui/react'
+} from '@chakra-ui/react';
 import {
   CheckCircleIcon,
   InfoIcon,
   QuestionIcon,
   WarningIcon,
-} from '@chakra-ui/icons'
-import '../App.css'
-import { SearchWord } from './SearchWord'
-import { useState } from 'react'
+} from '@chakra-ui/icons';
+import '../App.css';
+import { SearchWord } from './SearchWord';
+import { useState } from 'react';
 // import jsCookie from 'js-cookie'
-import titleImg from '../img/titleImg.png'
+import titleImg from '../img/titleImg.png';
 export const Setting = ({
   toast,
   questionList,
   loadData,
-  history,
-  saveHistory,
-  showSettingDetail,
-  updateQuestionOrder,
-  toggleQuestionRange,
-  updateQuestionMode,
-  selectQuestionList,
-  nextQuestion,
-  makeSetting,
-  addWordFilter,
-  deleteWordFilter,
-  updateAllSettings,
-  loadHistory,
+  // history,
+  // saveHistory,
+  // showSettingDetail,
+  // updateQuestionOrder,
+  // toggleQuestionRange,
+  // updateQuestionMode,
+  // selectQuestionList,
+  // nextQuestion,
+  // makeSetting,
+  // addWordFilter,
+  // deleteWordFilter,
+  // updateAllSettings,
+  // loadHistory,
+  log,
   technicalTerm,
+  toggleRange,
+  changeOrder,
+  startNewLesson,
 }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const settingDetail = showSettingDetail()
-  const [checkMsg, setCheckMsg] = useState()
-  const checkSelection = () => {
-    let selectedQuestionList = []
-    questionList.forEach((group) => {
-      if (settingDetail.questionRange.indexOf(group.groupTag) === -1) {
-        console.log('この文章が2回表示される')
-        return
-      }
-      group.groupContents.forEach((question) => {
-        let flag = 0
-        if (settingDetail.wordFilter.length === 0) {
-          flag = 1
-        }
-        settingDetail.wordFilter.forEach((word) => {
-          if (question.detailInfo && question.detailInfo.indexOf(word) > -1)
-            flag = 1
-          if (
-            question.questionSentence &&
-            question.questionSentence.indexOf(word) > -1
-          )
-            flag = 1
-          if (question.answer && question.answer.indexOf(word) > -1) flag = 1
-          if (question.commentary && question.commentary.indexOf(word) > -1)
-            flag = 1
-          if (
-            question.choices &&
-            question.choices.every((choice) => choice.indexOf(word) === -1) ===
-              false
-          )
-            flag = 1
-        })
-        if (flag === 0) return
-        selectedQuestionList.push(question)
-      })
-    })
-    console.log('selectedQuestionList:')
-    console.log(selectedQuestionList)
-    if (
-      settingDetail.wordFilter.length > 0 &&
-      selectedQuestionList.length > 0
-    ) {
-      setCheckMsg('現在' + selectedQuestionList.length + '件の質問を選択中')
-    } else if (selectedQuestionList.length === 0) {
-      setCheckMsg('条件を満たした質問が存在しません')
-    } else {
-      setCheckMsg()
-      console.log('1回だけ表示される')
-    }
-  }
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  // const settingDetail = showSettingDetail()
+  const [checkMsg, setCheckMsg] = useState();
+  // const checkSelection = () => {
+  //   let selectedQuestionList = []
+  //   questionList.forEach((group) => {
+  //     if (settingDetail.questionRange.indexOf(group.groupTag) === -1) {
+  //       console.log('この文章が2回表示される')
+  //       return
+  //     }
+  //     group.groupContents.forEach((question) => {
+  //       let flag = 0
+  //       if (settingDetail.wordFilter.length === 0) {
+  //         flag = 1
+  //       }
+  //       settingDetail.wordFilter.forEach((word) => {
+  //         if (question.detailInfo && question.detailInfo.indexOf(word) > -1)
+  //           flag = 1
+  //         if (
+  //           question.questionSentence &&
+  //           question.questionSentence.indexOf(word) > -1
+  //         )
+  //           flag = 1
+  //         if (question.answer && question.answer.indexOf(word) > -1) flag = 1
+  //         if (question.commentary && question.commentary.indexOf(word) > -1)
+  //           flag = 1
+  //         if (
+  //           question.choices &&
+  //           question.choices.every((choice) => choice.indexOf(word) === -1) ===
+  //             false
+  //         )
+  //           flag = 1
+  //       })
+  //       if (flag === 0) return
+  //       selectedQuestionList.push(question)
+  //     })
+  //   })
+  //   console.log('selectedQuestionList:')
+  //   console.log(selectedQuestionList)
+  //   if (
+  //     settingDetail.wordFilter.length > 0 &&
+  //     selectedQuestionList.length > 0
+  //   ) {
+  //     setCheckMsg('現在' + selectedQuestionList.length + '件の質問を選択中')
+  //   } else if (selectedQuestionList.length === 0) {
+  //     setCheckMsg('条件を満たした質問が存在しません')
+  //   } else {
+  //     setCheckMsg()
+  //     console.log('1回だけ表示される')
+  //   }
+  // }
   const scrollToTop = () => {
     // let element = document.documentElement
     // let bottom = element.scrollHeight - element.clientHeight
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
-    })
-  }
+    });
+  };
   return (
     <>
       <Box
@@ -173,14 +177,15 @@ export const Setting = ({
               borderColor="whiteAlpha"
               variant="solid"
               onClick={() => {
-                updateQuestionMode('training')
-                selectQuestionList(questionList, settingDetail)
-                nextQuestion(settingDetail)
-                makeSetting()
-                saveHistory(history[history.length - 1], settingDetail)
+                // updateQuestionMode('training')
+                // selectQuestionList(questionList, settingDetail)
+                // nextQuestion(settingDetail)
+                // makeSetting()
+                // saveHistory(history[history.length - 1], settingDetail)
+                startNewLesson(questionList);
                 setTimeout(() => {
-                  scrollToTop()
-                }, 1000)
+                  scrollToTop();
+                }, 1000);
               }}
             >
               はじめから
@@ -201,16 +206,16 @@ export const Setting = ({
               borderColor="whiteAlpha"
               opacity={'0.9'}
               onClick={() => {
-                loadHistory(loadData.history, questionList)
-                updateAllSettings(loadData.status)
-                nextQuestion(loadData.status)
-                makeSetting()
-                saveHistory(history[history.length - 1], loadData.status)
+                // loadHistory(loadData.history, questionList)
+                // updateAllSettings(loadData.status)
+                // nextQuestion(loadData.status)
+                // makeSetting()
+                // saveHistory(history[history.length - 1], loadData.status)
                 // 現在非同期バグが発生しており、ロードしたsettingをこの形でないと反映できない。がんばれ、未来の俺！
                 setTimeout(() => {
-                  updateAllSettings(loadData.status)
-                  scrollToTop()
-                }, 2000)
+                  // updateAllSettings(loadData.status)
+                  scrollToTop();
+                }, 2000);
               }}
             >
               続きから(あと{loadData.history.split(',').length - 1}問)
@@ -307,14 +312,13 @@ export const Setting = ({
           </>
         )}
 
-        <RadioGroup defaultValue={settingDetail.questionOrder}>
+        <RadioGroup defaultValue={log.order}>
           <Stack spacing={5} direction="row" p={2}>
             <Radio
               colorScheme="red"
               value="random"
               onChange={() => {
-                updateQuestionOrder('random')
-                // saveSetting(settingDetail)
+                changeOrder('random');
               }}
             >
               ランダム出題
@@ -323,18 +327,14 @@ export const Setting = ({
               colorScheme="green"
               value="ascend"
               onChange={() => {
-                updateQuestionOrder('ascend')
-                // saveSetting(settingDetail)
+                changeOrder('ascend');
               }}
             >
               順番通り出題
             </Radio>
           </Stack>
         </RadioGroup>
-        <CheckboxGroup
-          colorScheme="green"
-          defaultValue={settingDetail.questionRange}
-        >
+        <CheckboxGroup colorScheme="green" defaultValue={log.range}>
           <Stack
             w={'sm'}
             spacing={[2, 4]}
@@ -349,8 +349,7 @@ export const Setting = ({
                 value={group.groupTag}
                 key={index}
                 onChange={() => {
-                  toggleQuestionRange(group.groupTag)
-                  checkSelection()
+                  toggleRange(group.groupTag);
                   // saveSetting(settingDetail)
                 }}
               >
@@ -361,19 +360,19 @@ export const Setting = ({
           </Stack>
         </CheckboxGroup>
       </Box>
-      <SearchWord
+      {/* <SearchWord
         toast={toast}
-        showSettingDetail={showSettingDetail}
-        addWordFilter={addWordFilter}
-        deleteWordFilter={deleteWordFilter}
-        questionList={questionList}
-        checkSelection={checkSelection}
+        // showSettingDetail={showSettingDetail}
+        // addWordFilter={addWordFilter}
+        // deleteWordFilter={deleteWordFilter}
+        // questionList={questionList}
+        // checkSelection={checkSelection}
         technicalTerm={technicalTerm}
-      />
+      /> */}
       <Divider orientation="horizontal" maxW={'lg'} />
       <Text fontSize="xs" textColor={'blackAlpha.500'} ml="4">
         ©2022- IgaTatApps
       </Text>
     </>
-  )
-}
+  );
+};

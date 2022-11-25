@@ -15,8 +15,8 @@ import { useQuestionList } from './useQuestionList';
 import { useSetting } from './hooks/useSetting';
 import { useHistory } from './hooks/useHistory';
 import { useTechnicalTerm } from './useTechnicalTerm';
-import { ColorModeSwitcher } from './ColorModeSwitcher';
 import { register } from './serviceWorker';
+import { useLog } from './hooks/useLog';
 
 function App() {
   const toast = useToast();
@@ -24,29 +24,30 @@ function App() {
   const questionList = showQuestionList();
   const { showTechnicalTerm } = useTechnicalTerm();
   const technicalTerm = showTechnicalTerm();
-  const {
-    showSettingDetail,
-    updateQuestionOrder,
-    toggleQuestionRange,
-    updateQuestionMode,
-    makeSetting,
-    addWordFilter,
-    deleteWordFilter,
-    updateAllSettings,
-  } = useSetting();
-  let settingDetail = showSettingDetail();
-  const {
-    showHistory,
-    selectQuestionList,
-    nextQuestion,
-    checkAnswer,
-    hideAnswer,
-    reviewQuestion,
-    reviewAskingQuestion,
-    loadHistory,
-  } = useHistory();
-  const history = showHistory();
-  const thisAppNameTag = 'anywhere-physiology1';
+  // const {
+  //   showSettingDetail,
+  //   updateQuestionOrder,
+  //   toggleQuestionRange,
+  //   updateQuestionMode,
+  //   makeSetting,
+  //   addWordFilter,
+  //   deleteWordFilter,
+  //   updateAllSettings,
+  // } = useSetting();
+  // let settingDetail = showSettingDetail();
+  // const {
+  //   showHistory,
+  //   selectQuestionList,
+  //   nextQuestion,
+  //   checkAnswer,
+  //   reviewQuestion,
+  //   reviewAskingQuestion,
+  //   loadHistory,
+  // } = useHistory();
+  const { showLog, toggleRange, changeOrder, startNewLesson } = useLog();
+  const log = showLog();
+  // const history = showHistory();
+  const thisAppNameTag = 'anywhere-prototype2';
   // ここからWebStorageを利用した設定の引継ぎ
   let loadData = {
     app: `${thisAppNameTag}`,
@@ -96,53 +97,42 @@ function App() {
           第1生理学
         </Badge>
       </Flex>
-      <ColorModeSwitcher />
-      <Button onClick={register}></Button>
 
-      {settingDetail.isSet ? (
+      {log.startTime !== '' ? (
         <></>
       ) : (
         <Box maxW={'lg'} mr="auto" ml={'auto'}>
           <Setting
             toast={toast}
             questionList={questionList}
-            loadData={loadData}
-            history={history}
             saveHistory={saveHistory}
-            showSettingDetail={showSettingDetail}
-            updateQuestionOrder={updateQuestionOrder}
-            toggleQuestionRange={toggleQuestionRange}
-            updateQuestionMode={updateQuestionMode}
-            selectQuestionList={selectQuestionList}
-            nextQuestion={nextQuestion}
-            makeSetting={makeSetting}
-            addWordFilter={addWordFilter}
-            deleteWordFilter={deleteWordFilter}
-            updateAllSettings={updateAllSettings}
-            loadHistory={loadHistory}
+            log={log}
+            toggleRange={toggleRange}
+            changeOrder={changeOrder}
+            startNewLesson={startNewLesson}
             technicalTerm={technicalTerm}
           />
         </Box>
       )}
-      {settingDetail.isSet ? (
+      {log.startTime !== "" ? (
         <Box bgColor={'blackAlpha.100'} mt="-100px" pt={'100px'} minH="1500px">
           <Box maxW="2xl" mr="auto" ml={'auto'}>
             <QuestionsLog
               toast={toast}
-              loadData={loadData}
-              showHistory={showHistory}
-              nextQuestion={nextQuestion}
-              checkAnswer={checkAnswer}
-              showSettingDetail={showSettingDetail}
-              reviewQuestion={reviewQuestion}
-              reviewAskingQuestion={reviewAskingQuestion}
+              // loadData={loadData}
+              // showHistory={showHistory}
+              // nextQuestion={nextQuestion}
+              // checkAnswer={checkAnswer}
+              // showSettingDetail={showSettingDetail}
+              // reviewQuestion={reviewQuestion}
+              // reviewAskingQuestion={reviewAskingQuestion}
               saveHistory={saveHistory}
               technicalTerm={technicalTerm}
             />
             <Box h={'300px'} width="100px"></Box>
             <ControlPanel
-              showSettingDetail={showSettingDetail}
-              showHistory={showHistory}
+              // showSettingDetail={showSettingDetail}
+              // showHistory={showHistory}
             />
           </Box>
         </Box>
