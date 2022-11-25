@@ -10,7 +10,7 @@ export const useLog = () => {
     asking: '',
     remaining: [],
     review: [],
-    isAnswered: false,
+    // isAnswered: false,
   });
   // 方針：1つのボタンにつき関数１つ
   const showLog = () => {
@@ -56,6 +56,7 @@ export const useLog = () => {
       }
       newLog.asking = newLog.remaining[i];
       newLog.remaining.splice(i, 1);
+      // newLog.isAnswered = false;
     }
   };
   const startNewLesson = questionList => {
@@ -86,16 +87,19 @@ export const useLog = () => {
         }, []),
       ];
     }, []);
+    if (newLog.remaining === []) return;
     newLog.remaining.sort();
     nextQuestion();
+    newLog.startTime = new Date().getTime();
     setLog(newLog);
-    console.log('newLog.asking:', newLog.asking);
+    console.log(newLog);
   };
   return {
     showLog,
     toggleRange,
     toggleReview,
     changeOrder,
+    nextQuestion,
     startNewLesson,
   };
 };

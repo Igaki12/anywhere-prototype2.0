@@ -40,6 +40,8 @@ import { useState } from 'react';
 import titleImg from '../img/titleImg.png';
 export const Setting = ({
   toast,
+  selected,
+  setSelected,
   questionList,
   loadData,
   // history,
@@ -63,7 +65,7 @@ export const Setting = ({
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   // const settingDetail = showSettingDetail()
-  const [checkMsg, setCheckMsg] = useState();
+  // const [checkMsg, setCheckMsg] = useState();
   // const checkSelection = () => {
   //   let selectedQuestionList = []
   //   questionList.forEach((group) => {
@@ -120,6 +122,16 @@ export const Setting = ({
       behavior: 'smooth',
     });
   };
+  const howManyQuestions = () => {
+    setSelected(
+      questionList.reduce((prevGroup, curGroup, index) => {
+        if (log.range && log.range.indexOf(curGroup.groupTag) !== -1) {
+          return prevGroup + curGroup.groupContents.length;
+        }
+        return prevGroup;
+      }, 0)
+    );
+  };
   return (
     <>
       <Box
@@ -157,7 +169,7 @@ export const Setting = ({
           fallback={<Skeleton height={'100px'} />}
         />
         <Flex ml={4} mr="4">
-          {checkMsg === '条件を満たした質問が存在しません' ? (
+          {selected !== 0 ? (
             <Button
               colorScheme="teal"
               variant="variant"
@@ -183,9 +195,8 @@ export const Setting = ({
                 // makeSetting()
                 // saveHistory(history[history.length - 1], settingDetail)
                 startNewLesson(questionList);
-                setTimeout(() => {
-                  scrollToTop();
-                }, 1000);
+                scrollToTop();
+                howManyQuestions();
               }}
             >
               はじめから
@@ -264,6 +275,9 @@ export const Setting = ({
             </List>
             <Divider orientation="horizontal" mt={3} mb="1" />
             <Text>アップデート履歴</Text>
+            <Text fontSize={'md'} fontWeight="bold" mb="2" mt={2}>
+              11-27_Ver2.0-包括的アップデート...コード部分を作り直し、WebStorageとの接続を強化、軽量化、見直しシステムの変更など
+            </Text>
             <Text fontSize={'sm'}>10-03_Ver1.5-頻出キーワード確認を追加</Text>
             <Text fontSize={'sm'}>10-02_Ver1.4-キーワード検索を便利に</Text>
             <Text fontSize={'sm'}>09-16_Ver1.3-ボタンを透明に</Text>
@@ -294,7 +308,7 @@ export const Setting = ({
         </ModalContent>
       </Modal>
       <Box mr={'auto'} ml="auto" maxW={'sm'}>
-        {checkMsg === '条件を満たした質問が存在しません' ? (
+        {/* {checkMsg === '条件を満たした質問が存在しません' ? (
           <Alert status="error" fontWeight={'semibold'} maxW="lg">
             <AlertIcon />
             {checkMsg}
@@ -310,7 +324,7 @@ export const Setting = ({
               <></>
             )}
           </>
-        )}
+        )} */}
 
         <RadioGroup defaultValue={log.order}>
           <Stack spacing={5} direction="row" p={2}>

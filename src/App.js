@@ -17,9 +17,11 @@ import { useHistory } from './hooks/useHistory';
 import { useTechnicalTerm } from './useTechnicalTerm';
 import { register } from './serviceWorker';
 import { useLog } from './hooks/useLog';
+import { useState } from 'react';
 
 function App() {
   const toast = useToast();
+  const [selected, setSelected] = useState(0);
   const { showQuestionList } = useQuestionList();
   const questionList = showQuestionList();
   const { showTechnicalTerm } = useTechnicalTerm();
@@ -44,7 +46,14 @@ function App() {
   //   reviewAskingQuestion,
   //   loadHistory,
   // } = useHistory();
-  const { showLog, toggleRange, changeOrder, startNewLesson } = useLog();
+  const {
+    showLog,
+    toggleRange,
+    changeOrder,
+    startNewLesson,
+    toggleReview,
+    nextQuestion,
+  } = useLog();
   const log = showLog();
   // const history = showHistory();
   const thisAppNameTag = 'anywhere-prototype2';
@@ -91,7 +100,7 @@ function App() {
           colorScheme="teal"
           variant={'outline'}
         >
-          Ver.1.5
+          Ver.2.0
         </Badge>
         <Badge m={1} mt="0" borderRadius="full" px="2" colorScheme="teal">
           第1生理学
@@ -104,6 +113,8 @@ function App() {
         <Box maxW={'lg'} mr="auto" ml={'auto'}>
           <Setting
             toast={toast}
+            selected={selected}
+            setSelected={setSelected}
             questionList={questionList}
             saveHistory={saveHistory}
             log={log}
@@ -114,27 +125,28 @@ function App() {
           />
         </Box>
       )}
-      {log.startTime !== "" ? (
-        <Box bgColor={'blackAlpha.100'} mt="-100px" pt={'100px'} minH="1500px">
-          <Box maxW="2xl" mr="auto" ml={'auto'}>
-            <QuestionsLog
-              toast={toast}
-              // loadData={loadData}
-              // showHistory={showHistory}
-              // nextQuestion={nextQuestion}
-              // checkAnswer={checkAnswer}
-              // showSettingDetail={showSettingDetail}
-              // reviewQuestion={reviewQuestion}
-              // reviewAskingQuestion={reviewAskingQuestion}
-              saveHistory={saveHistory}
-              technicalTerm={technicalTerm}
-            />
-            <Box h={'300px'} width="100px"></Box>
-            <ControlPanel
-              // showSettingDetail={showSettingDetail}
-              // showHistory={showHistory}
-            />
-          </Box>
+      {log.startTime !== '' ? (
+        <Box maxW="2xl" mr="auto" ml={'auto'}>
+          <QuestionsLog
+            toast={toast}
+            questionList={questionList}
+            log={log}
+            // loadData={loadData}
+            // showHistory={showHistory}
+            nextQuestion={nextQuestion}
+            // checkAnswer={checkAnswer}
+            // showSettingDetail={showSettingDetail}
+            // reviewQuestion={reviewQuestion}
+            // reviewAskingQuestion={reviewAskingQuestion}
+            toggleReview={toggleReview}
+            // saveHistory={saveHistory}
+            technicalTerm={technicalTerm}
+          />
+          <Box h={'300px'} width="100px"></Box>
+          {/* <ControlPanel
+            // showSettingDetail={showSettingDetail}
+            // showHistory={showHistory}
+            /> */}
         </Box>
       ) : (
         <></>
