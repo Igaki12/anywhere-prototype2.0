@@ -83,7 +83,7 @@ export const QuestionsLog = ({
         if (curContent.choices && curContent.choices.length > 0) {
           for (let i = 0; i < curContent.choices.length; i++) {
             randomizedChoices.splice(
-              Math.floor(Math.random() * i),
+              Math.floor(Math.random() * (i + 1)),
               0,
               curContent.choices[i]
             );
