@@ -99,7 +99,11 @@ export const QuestionsLog = ({
               ? curContent.detailInfo
               : `(${contentI + 1})`,
           questionImg: curContent.questionImg ? curContent.questionImg : [],
-          questionSentence: curContent.questionSentence,
+          questionSentence: curContent.questionSentence
+            ? curContent.questionSentence
+            : `${log.range[parseInt(id.slice(0, 3))]}の${
+                contentI + 1
+              }番目の問題を確認`,
           randomizedChoices: randomizedChoices,
           answerImg: curContent.answerImg ? curContent.answerImg : [],
           answer:
