@@ -36,8 +36,9 @@ export const QuestionsLog = ({
   log,
   questionList,
   toast,
+  isAnswered,
+  setIsAnswered,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
   // const toast = useToast()
   const toastGoodJob = () => {
     if (log.remaining.length === 0) {
@@ -274,10 +275,7 @@ export const QuestionsLog = ({
           <></>
         )}
       </ul>
-      {/* <ResultBar
-        showHistory={showHistory}
-        showSettingDetail={showSettingDetail}
-      /> */}
+      <ResultBar log={log} isAnswered={isAnswered} />
       {/* 現在解いている問題askingQuestionはaskedQuestionとは分けて表示している。 */}
       {/* <Collapse animateOpacity> */}
       {log.asking &&
@@ -386,8 +384,8 @@ export const QuestionsLog = ({
                 </Box>
               </Box>
             </Box>
-            <Collapse in={isOpen} animateOpacity>
-              {isOpen === true ? (
+            <Collapse in={isAnswered} animateOpacity>
+              {isAnswered === true ? (
                 <Box
                   maxW="2xl"
                   borderWidth="2px"
@@ -545,7 +543,7 @@ export const QuestionsLog = ({
                         variant="ghost"
                         aria-label="review this question"
                         onClick={() => {
-                          // setIsOpen(false);
+                          // setIsAnswered(false);
                           // setTimeout(
                           //   () => reviewAskingQuestion(settingDetail),
                           //   500
@@ -574,7 +572,7 @@ export const QuestionsLog = ({
       {/* </Collapse> */}
       {/* 現在解いている問題の解答に関しても分けて表示する。isAnsweredに依る。 */}
 
-      {isOpen === true && log.remaining && log.remaining.length > 0 ? (
+      {isAnswered === true && log.remaining && log.remaining.length > 0 ? (
         <Button
           autoFocus
           m={1}
@@ -589,7 +587,7 @@ export const QuestionsLog = ({
               bottom: 0,
               behavior: 'smooth',
             });
-            setIsOpen(false);
+            setIsAnswered(false);
           }}
         >
           次の問題へ
@@ -597,7 +595,7 @@ export const QuestionsLog = ({
       ) : (
         <></>
       )}
-      {isOpen === true ? (
+      {isAnswered === true ? (
         <></>
       ) : (
         <Button
@@ -612,7 +610,7 @@ export const QuestionsLog = ({
             // console.log('setting確認');
             // console.log(settingDetail);
             // checkAnswer();
-            setIsOpen(true);
+            setIsAnswered(true);
             toastGoodJob();
             // saveHistory(history[history.length - 1], settingDetail);
             // setTimeout(() => scrollToTheBottom(), 500)

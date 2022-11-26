@@ -20,10 +20,8 @@ import {
   Box,
 } from '@chakra-ui/react';
 import { SettingsIcon, ChevronDownIcon } from '@chakra-ui/icons';
-export const ControlPanel = ({ showSettingDetail, showHistory }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  let settingDetail = showSettingDetail();
-  let history = showHistory();
+export const ControlPanel = ({ log, isAnswered }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure(false);
   const scrollToTheBottom = () => {
     let element = document.documentElement;
     let bottom = element.scrollHeight - element.clientHeight;
@@ -32,7 +30,10 @@ export const ControlPanel = ({ showSettingDetail, showHistory }) => {
       behavior: 'smooth',
     });
   };
-  let isAnsweredPoint = history[history.length - 1].isAnswered ? 0 : 1;
+  let achievementRate = Math.floor(
+    (100 * (log.asked.length + (isAnswered ? 1 : 0))) /
+      (log.asked.length + log.remaining.length + 1)
+  );
   return (
     <>
       <Stack
@@ -44,8 +45,7 @@ export const ControlPanel = ({ showSettingDetail, showHistory }) => {
         right={'5'}
         alignItems={'end'}
       >
-        {history[history.length - 1].remainingQuestionList.length > 0 ||
-        history[history.length - 1].isAnswered === false ? (
+        {log.remaining.length > 0 || isAnswered === false ? (
           <Button
             // color={'gray.600'}
             borderColor={'white'}
@@ -55,7 +55,10 @@ export const ControlPanel = ({ showSettingDetail, showHistory }) => {
             // bgColor={'white'}
             h="45px"
             w={'45px'}
-            onClick={onOpen}
+            onClick={() => {
+              onOpen();
+              console.log(isOpen);
+            }}
             colorScheme="blackAlpha"
             boxShadow="dark-lg"
           >
@@ -87,22 +90,18 @@ export const ControlPanel = ({ showSettingDetail, showHistory }) => {
           <ModalHeader>Settings</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Text>現在のモード:</Text>
-            <Tag colorScheme="teal" m={1}>
-              {settingDetail.mode}
-            </Tag>
             <Text>出題パターン:</Text>
             <Tag colorScheme="teal" m={1}>
-              {settingDetail.questionOrder}
+              {log.order}
             </Tag>
             <Text>出題範囲:</Text>
-            {settingDetail.questionRange.map((year, index) => (
+            {log.range.map((year, index) => (
               <Tag colorScheme="teal" m="1" key={index}>
                 {year}
               </Tag>
             ))}
             <Text>単語絞り込み:</Text>
-            {settingDetail.wordFilter.map((word, index) => (
+            {log.wordFilter.map((word, index) => (
               <Tag colorScheme="teal" m="1" key={index}>
                 {word}
               </Tag>
@@ -113,30 +112,16 @@ export const ControlPanel = ({ showSettingDetail, showHistory }) => {
               <CircularProgress
                 color="teal"
                 trackColor="gray.200"
-                value={
-                  (100 *
-                    (history[history.length - 1].questionNum -
-                      isAnsweredPoint)) /
-                  (history[history.length - 1].questionNum +
-                    history[history.length - 1].remainingQuestionList.length)
-                }
+                value={achievementRate}
               >
                 <CircularProgressLabel>
-                  {Math.floor(
-                    (100 *
-                      (history[history.length - 1].questionNum -
-                        isAnsweredPoint)) /
-                      (history[history.length - 1].questionNum +
-                        history[history.length - 1].remainingQuestionList
-                          .length)
-                  )}
-                  %
+                  {achievementRate}%
                 </CircularProgressLabel>
               </CircularProgress>
               <Box ml={2}>
                 <Text fontWeight={'bold'} pl="2">
-                  現在{history[history.length - 1].questionNum}問目 / 残り
-                  {history[history.length - 1].remainingQuestionList.length}問
+                  現在{log.asked.length + 1}問目 / 残り
+                  {log.remaining.length}問
                 </Text>
               </Box>
             </Flex>
@@ -182,32 +167,5 @@ export const ControlPanel = ({ showSettingDetail, showHistory }) => {
         </Button>
       </Stack>
     </>
-
-    // <Stack
-    //   bg={'teal'}
-    //   p="2"
-    //   bottom={'0'}
-    //   position={'fixed'}
-    //   w="100%"
-    //   mt={'auto'}
-    //   direction="row"
-    // >
-    //   <Button colorScheme="teal" variant="solid">
-    //     <ArrowBackIcon />
-    //   </Button>
-    //   <Spacer />
-    //   <Button
-    //     colorScheme="teal"
-    //     variant="solid"
-    //     minW={'150px'}
-    //     letterSpacing="0.1em"
-    //   >
-    //     Next
-    //   </Button>
-    //   <Spacer />
-    //   <Button colorScheme="teal" variant="solid">
-    //     <CheckIcon />
-    //   </Button>
-    // </Stack>
   );
 };

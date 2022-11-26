@@ -46,6 +46,7 @@ function App() {
   //   reviewAskingQuestion,
   //   loadHistory,
   // } = useHistory();
+  const [isAnswered, setIsAnswered] = useState(false);
   const {
     showLog,
     toggleRange,
@@ -103,7 +104,7 @@ function App() {
           Ver.2.0
         </Badge>
         <Badge m={1} mt="0" borderRadius="full" px="2" colorScheme="teal">
-          第1生理学
+          発生再生学
         </Badge>
       </Flex>
 
@@ -128,6 +129,8 @@ function App() {
       {log.startTime !== '' ? (
         <Box maxW="2xl" mr="auto" ml={'auto'}>
           <QuestionsLog
+            isAnswered={isAnswered}
+            setIsAnswered={setIsAnswered}
             toast={toast}
             questionList={questionList}
             log={log}
@@ -143,10 +146,7 @@ function App() {
             technicalTerm={technicalTerm}
           />
           <Box h={'300px'} width="100px"></Box>
-          {/* <ControlPanel
-            // showSettingDetail={showSettingDetail}
-            // showHistory={showHistory}
-            /> */}
+          <ControlPanel log={log} isAnswered={isAnswered} />
         </Box>
       ) : (
         <></>
