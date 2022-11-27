@@ -150,14 +150,15 @@ export const useLog = () => {
                       group.groupContents.length > parseInt(id.slice(-3))
                   )
                 ),
-                review: curLog.review.filter(id =>
-                  questionList.find(
-                    group =>
-                      group.groupTag ===
-                        curLog.range[parseInt(id.slice(0, 3))] &&
-                      group.groupContents.length > parseInt(id.slice(-3))
-                  )
-                ),
+                review: [],
+                // curLog.review.filter(id =>
+                //   questionList.find(
+                //     group =>
+                //       group.groupTag ===
+                //         curLog.range[parseInt(id.slice(0, 3))] &&
+                //       group.groupContents.length > parseInt(id.slice(-3))
+                //   )
+                // ),
               },
               ...prevLog,
             ];

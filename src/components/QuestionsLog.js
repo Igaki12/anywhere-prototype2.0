@@ -14,11 +14,9 @@ import {
   Collapse,
   Tooltip,
   Skeleton,
+  Center,
 } from '@chakra-ui/react';
-import {
-  ArrowDownIcon,
-  RepeatIcon,
-} from '@chakra-ui/icons';
+import { ArrowDownIcon, RepeatIcon, StarIcon } from '@chakra-ui/icons';
 import { ResultBar } from './ResultBar';
 import '../App.css';
 import { useState } from 'react';
@@ -37,6 +35,7 @@ export const QuestionsLog = ({
   // saveHistory,
   technicalTerm,
   log,
+  loadLog,
   questionList,
   toast,
   isAnswered,
@@ -85,7 +84,6 @@ export const QuestionsLog = ({
       )
       .groupContents.reduce((prevContent, curContent, contentI) => {
         if (contentI !== parseInt(id.slice(-3))) return prevContent;
-        // let reviewedNum = 
         let randomizedChoices = [];
         if (curContent.choices && curContent.choices.length > 0) {
           for (let i = 0; i < curContent.choices.length; i++) {
@@ -102,7 +100,7 @@ export const QuestionsLog = ({
           groupTag: log.range[parseInt(id.slice(0, 3))],
           detailInfo:
             curContent.detailInfo && curContent.detailInfo !== ''
-              ?  curContent.detailInfo
+              ? curContent.detailInfo
               : `(${contentI + 1})`,
           questionImg: curContent.questionImg ? curContent.questionImg : [],
           questionSentence: curContent.questionSentence
@@ -179,7 +177,7 @@ export const QuestionsLog = ({
                       >
                         {question.groupTag}
                       </Badge>
-                      <Box
+                      <Center
                         color="gray.500"
                         fontWeight="semibold"
                         letterSpacing="wide"
@@ -188,8 +186,42 @@ export const QuestionsLog = ({
                         ml="2"
                         key={index + 'QuestionBox2'}
                       >
+                        {Array(
+                          loadLog(appName).logs.reduce(
+                            (prevLog, curLog, index) => {
+                              if (
+                                curLog &&
+                                curLog.review &&
+                                questionList.find(group => {
+                                  return (
+                                    group.groupTag ===
+                                      log.range[
+                                        parseInt(question.id.slice(0, 3))
+                                      ] &&
+                                    group.groupContents &&
+                                    group.groupContents.length >
+                                      parseInt(question.id.slice(-3))
+                                  );
+                                }) &&
+                                curLog.review.indexOf(question.id) !== -1
+                              ) {
+                                console.log('見直しリスト確認', question.id);
+                                return prevLog + 1;
+                              }
+                              return prevLog;
+                            },
+                            0
+                          )
+                        )
+                          .fill('')
+                          .map((value, index) => {
+                            if (index > 4) {
+                              return <></>;
+                            }
+                            return <StarIcon boxSize={'0.8em'} />;
+                          })}{' '}
                         {question.detailInfo}
-                      </Box>
+                      </Center>
                     </Box>
 
                     <Box
@@ -373,7 +405,7 @@ export const QuestionsLog = ({
                   >
                     {question.groupTag}
                   </Badge>
-                  <Box
+                  <Center
                     color="gray.500"
                     fontWeight="semibold"
                     letterSpacing="wide"
@@ -381,8 +413,36 @@ export const QuestionsLog = ({
                     textTransform="uppercase"
                     ml="2"
                   >
+                    {Array(
+                      loadLog(appName).logs.reduce((prevLog, curLog, index) => {
+                        if (
+                          curLog &&
+                          curLog.review &&
+                          questionList.find(group => {
+                            return (
+                              group.groupTag ===
+                                log.range[parseInt(question.id.slice(0, 3))] &&
+                              group.groupContents &&
+                              group.groupContents.length >
+                                parseInt(question.id.slice(-3))
+                            );
+                          }) &&
+                          curLog.review.indexOf(question.id) !== -1
+                        ) {
+                          return prevLog + 1;
+                        }
+                        return prevLog;
+                      }, 0)
+                    )
+                      .fill('')
+                      .map((value, index) => {
+                        if (index > 4) {
+                          return <></>;
+                        }
+                        return <StarIcon boxSize={'0.8em'} />;
+                      })}{' '}
                     {question.detailInfo}
-                  </Box>
+                  </Center>
                 </Box>
 
                 <Box mt="1" fontWeight="semibold" as="h4" lineHeight="tight">
