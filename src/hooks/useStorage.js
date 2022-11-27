@@ -5,7 +5,7 @@ export const useStorage = () => {
       latestUpdate: new Date().getTime(),
       logs: [],
     };
-    console.log(JSON.parse(localStorage.getItem(appName)).logs);
+    // console.log(JSON.parse(localStorage.getItem(appName)).logs);
     if (
       localStorage.getItem(appName) &&
       JSON.parse(localStorage.getItem(appName)).logs &&
@@ -41,13 +41,13 @@ export const useStorage = () => {
     ) {
       savingData.logs = loadLog(appName).logs.reduce(
         (prevLog, curLog, index) => {
-          console.log(newLog, curLog);
+          // console.log(newLog, curLog);
           if (
             curLog &&
             curLog.startTime &&
             curLog.startTime === newLog.startTime
           ) {
-            console.log('nextQuestion:', newLog);
+            // console.log('nextQuestion:', newLog);
             return [...prevLog, newLog];
           }
           return [...prevLog, curLog];
@@ -60,7 +60,7 @@ export const useStorage = () => {
       savingData.logs = [newLog];
     }
     localStorage.setItem(appName, JSON.stringify(savingData));
-    console.log(localStorage.getItem(appName));
+    // console.log(localStorage.getItem(appName));
   };
   return {
     loadLog,

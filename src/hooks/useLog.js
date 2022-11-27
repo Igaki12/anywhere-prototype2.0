@@ -50,7 +50,7 @@ export const useLog = () => {
       let i = 0;
       if (newLog.order === 'random') {
         i = Math.floor(Math.random() * newLog.remaining.length);
-        console.log('random i:', i);
+        // console.log('random i:', i);
       }
       if (newLog.asking && newLog.asking !== '') {
         newLog.asked.unshift(newLog.asking);
@@ -97,7 +97,7 @@ export const useLog = () => {
     nextQuestion();
     newLog.startTime = new Date().getTime();
     setLog(newLog);
-    console.log(newLog);
+    // console.log(newLog);
     saveLog(appName, newLog);
   };
   const startLoadedLesson = (questionList, appName, startTime) => {
@@ -177,7 +177,7 @@ export const useLog = () => {
       nextQuestion();
     }
     setLog(newLog);
-    console.log(newLog);
+    // console.log(newLog);
     newLog.startTime = new Date().getTime();
     saveLog(appName, newLog);
   };
