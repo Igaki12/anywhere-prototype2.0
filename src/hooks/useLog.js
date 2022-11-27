@@ -34,7 +34,7 @@ export const useLog = () => {
     newLog.order = newOrder;
     setLog(newLog);
   };
-  const toggleReview = id => {
+  const toggleReview = (id, appName) => {
     if (log.asked.indexOf(id) === -1 && log.asking !== id) return;
     let newLog = log;
     if (log.review.length > 0 && log.review.indexOf(id) !== -1) {
@@ -43,6 +43,7 @@ export const useLog = () => {
       newLog.review.push(id);
     }
     setLog(newLog);
+    saveLog(appName, newLog);
   };
   const nextQuestion = appName => {
     let newLog = log;

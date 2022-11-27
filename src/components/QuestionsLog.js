@@ -309,12 +309,12 @@ export const QuestionsLog = ({
                           variant="solid"
                           aria-label="review this question"
                           onClick={() => {
-                            toggleReview(question.id);
+                            toggleReview(question.id, appName);
                             setRenderSign(renderSign + 1);
                             toast({
                               title: 'この質問は見直しリストから除かれます',
                               position: 'top-right',
-                              description: `見直しリストには他に${log.review.length}問が選択されています`,
+                              description: `他に${log.review.length}問が選択されています`,
                               status: 'info',
                               duration: 9000,
                               isClosable: true,
@@ -334,12 +334,12 @@ export const QuestionsLog = ({
                           variant="ghost"
                           aria-label="review this question"
                           onClick={() => {
-                            toggleReview(question.id);
+                            toggleReview(question.id, appName);
                             setRenderSign(renderSign + 1);
                             toast({
-                              title: 'この質問は見直しリストに追加されました',
+                              title: 'この質問は見直しリストに追加されます',
                               position: 'top-right',
-                              description: `見直しリストには他に${
+                              description: `他に${
                                 log.review.length - 1
                               }問が選択されています`,
                               status: 'success',
@@ -675,12 +675,12 @@ export const QuestionsLog = ({
                           variant="solid"
                           aria-label="review this question"
                           onClick={() => {
-                            toggleReview(question.id);
+                            toggleReview(question.id, appName);
                             setRenderSign(renderSign + 1);
                             toast({
                               title: 'この質問は見直しリストから除かれます',
                               position: 'top-right',
-                              description: `見直しリストには他に${log.review.length}問が選択されています`,
+                              description: `他に${log.review.length}問が選択されています`,
                               status: 'info',
                               duration: 9000,
                               isClosable: true,
@@ -700,12 +700,12 @@ export const QuestionsLog = ({
                           variant="ghost"
                           aria-label="review this question"
                           onClick={() => {
-                            toggleReview(question.id);
+                            toggleReview(question.id, appName);
                             setRenderSign(renderSign + 1);
                             toast({
-                              title: 'この質問は見直しリストに追加されました',
+                              title: 'この質問は見直しリストに追加されます',
                               position: 'top-right',
-                              description: `見直しリストには他に${
+                              description: `他に${
                                 log.review.length - 1
                               }問が選択されています`,
                               status: 'success',

@@ -331,6 +331,7 @@ export const Setting = ({
         <RadioGroup defaultValue={log.order}>
           <Stack spacing={5} direction="row" p={2}>
             <Radio
+              size={'lg'}
               colorScheme="red"
               value="random"
               onChange={() => {
@@ -340,6 +341,7 @@ export const Setting = ({
               ランダム出題
             </Radio>
             <Radio
+              size={'lg'}
               colorScheme="green"
               value="ascend"
               onChange={() => {
@@ -362,6 +364,7 @@ export const Setting = ({
           >
             {questionList.map((group, index) => (
               <Checkbox
+                size={'lg'}
                 value={group.groupTag}
                 key={index}
                 onChange={() => {
