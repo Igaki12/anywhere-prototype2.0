@@ -38,6 +38,7 @@ export const QuestionsLog = ({
   toast,
   isAnswered,
   setIsAnswered,
+  appName,
 }) => {
   // const toast = useToast()
   const toastGoodJob = () => {
@@ -129,7 +130,7 @@ export const QuestionsLog = ({
           log.asked
             .reduce((prevId, curId, index) => {
               if (prevId && prevId.length > 9) return prevId;
-              console.log(makeQuestion(curId));
+              // console.log(makeQuestion(curId));
 
               return [makeQuestion(curId), ...prevId];
             }, [])
@@ -586,7 +587,7 @@ export const QuestionsLog = ({
           variant={'outline'}
           bgColor="white"
           onClick={() => {
-            nextQuestion();
+            nextQuestion(appName);
             window.scrollTo({
               bottom: 0,
               behavior: 'smooth',
@@ -616,6 +617,7 @@ export const QuestionsLog = ({
             // checkAnswer();
             setIsAnswered(true);
             toastGoodJob();
+            console.log(log);
             // saveHistory(history[history.length - 1], settingDetail);
             // setTimeout(() => scrollToTheBottom(), 500)
           }}

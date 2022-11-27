@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { useStorage } from './useStorage';
 
 export const useLog = () => {
+  const { saveLog, loadLog } = useStorage();
   const [log, setLog] = useState({
     startTime: '',
     order: 'ascend',
@@ -42,7 +44,7 @@ export const useLog = () => {
     }
     setLog(newLog);
   };
-  const nextQuestion = () => {
+  const nextQuestion = appName => {
     let newLog = log;
     if (newLog.remaining && newLog.remaining.length > 0) {
       let i = 0;
@@ -56,10 +58,13 @@ export const useLog = () => {
       }
       newLog.asking = newLog.remaining[i];
       newLog.remaining.splice(i, 1);
-      // newLog.isAnswered = false;
+      if (appName) {
+        saveLog(appName, newLog);
+        // console.log('nextQuestion', newLog.remaining.length);
+      }
     }
   };
-  const startNewLesson = questionList => {
+  const startNewLesson = (questionList, appName) => {
     if (log.range && log.range !== []) {
     } else {
       return;
@@ -93,6 +98,88 @@ export const useLog = () => {
     newLog.startTime = new Date().getTime();
     setLog(newLog);
     console.log(newLog);
+    saveLog(appName, newLog);
+  };
+  const startLoadedLesson = (questionList, appName, startTime) => {
+    let newLog = log;
+    if (
+      loadLog(appName) &&
+      loadLog(appName).logs &&
+      loadLog(appName).logs.length > 0 &&
+      loadLog(appName).logs.find(log => {
+        if (log && log.startTime && log.remaining) {
+          return log.startTime === startTime;
+        }
+        return false;
+      })
+    ) {
+      newLog = loadLog(appName)
+        .logs.reduce((prevLog, curLog, index) => {
+          if (curLog && curLog.startTime) {
+            return [
+              // ...prevLog,
+              {
+                startTime: curLog.startTime,
+                order: curLog.order,
+                range: curLog.range,
+                wordFilter: curLog.wordFilter,
+                asked: curLog.asked.filter(id =>
+                  questionList.find(
+                    group =>
+                      group.groupTag ===
+                        curLog.range[parseInt(id.slice(0, 3))] &&
+                      group.groupContents.length > parseInt(id.slice(-3))
+                  )
+                ),
+                asking:
+                  curLog.asking &&
+                  questionList.find(
+                    group =>
+                      group.groupTag ===
+                        curLog.range[parseInt(curLog.asking.slice(0, 3))] &&
+                      group.groupContents.length >
+                        parseInt(curLog.asking.slice(-3))
+                  )
+                    ? curLog.asking
+                    : '',
+                remaining: curLog.remaining.filter(id =>
+                  questionList.find(
+                    group =>
+                      group.groupTag ===
+                        curLog.range[parseInt(id.slice(0, 3))] &&
+                      group.groupContents.length > parseInt(id.slice(-3))
+                  )
+                ),
+                review: curLog.review.filter(id =>
+                  questionList.find(
+                    group =>
+                      group.groupTag ===
+                        curLog.range[parseInt(id.slice(0, 3))] &&
+                      group.groupContents.length > parseInt(id.slice(-3))
+                  )
+                ),
+              },
+              ...prevLog,
+            ];
+          }
+          return prevLog;
+        }, [])
+        .find(log => {
+          if (log && log.startTime) {
+            return log.startTime === startTime;
+          }
+          return false;
+        });
+    } else {
+      return;
+    }
+    if (newLog.asking === '') {
+      nextQuestion();
+    }
+    setLog(newLog);
+    console.log(newLog);
+    newLog.startTime = new Date().getTime();
+    saveLog(appName, newLog);
   };
   return {
     showLog,
@@ -101,5 +188,6 @@ export const useLog = () => {
     changeOrder,
     nextQuestion,
     startNewLesson,
+    startLoadedLesson,
   };
 };

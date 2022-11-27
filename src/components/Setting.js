@@ -43,7 +43,9 @@ export const Setting = ({
   selected,
   setSelected,
   questionList,
-  loadData,
+  appName,
+  // saveLog,
+  loadLog,
   // history,
   // saveHistory,
   // showSettingDetail,
@@ -62,6 +64,7 @@ export const Setting = ({
   toggleRange,
   changeOrder,
   startNewLesson,
+  startLoadedLesson,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   // const settingDetail = showSettingDetail()
@@ -147,8 +150,6 @@ export const Setting = ({
             onClick={onOpen}
             colorScheme="blackAlpha"
             variant={'solid'}
-            // borderWidth="2px"
-            // borderColor="white"
             m={0}
             w={'40px'}
             h="40px"
@@ -173,7 +174,6 @@ export const Setting = ({
             <Button
               colorScheme="teal"
               variant="variant"
-              // borderRadius={'full'}
               borderWidth="2px"
               borderColor="white"
               isDisabled
@@ -189,25 +189,24 @@ export const Setting = ({
               borderColor="whiteAlpha"
               variant="solid"
               onClick={() => {
-                // updateQuestionMode('training')
-                // selectQuestionList(questionList, settingDetail)
-                // nextQuestion(settingDetail)
-                // makeSetting()
-                // saveHistory(history[history.length - 1], settingDetail)
-                startNewLesson(questionList);
+                startNewLesson(questionList, appName);
                 scrollToTop();
                 howManyQuestions();
+                // setTimeout(() => {
+                //   saveLog(appName, log);
+                // }, 500);
               }}
             >
               はじめから
             </Button>
           )}
           <Spacer />
-          {loadData &&
-          loadData !== {} &&
-          loadData.history &&
-          loadData.status &&
-          loadData.history.split(',').length > 1 ? (
+          {loadLog(appName) &&
+          loadLog(appName).logs &&
+          loadLog(appName).logs[0] &&
+          loadLog(appName).logs[0].remaining &&
+          loadLog(appName).logs[0].remaining.length > 0 &&
+          loadLog(appName).logs[0].startTime ? (
             <Button
               bgGradient="linear(to bottom right, green.300, green.800)"
               color={'white'}
@@ -217,19 +216,23 @@ export const Setting = ({
               borderColor="whiteAlpha"
               opacity={'0.9'}
               onClick={() => {
-                // loadHistory(loadData.history, questionList)
-                // updateAllSettings(loadData.status)
-                // nextQuestion(loadData.status)
-                // makeSetting()
-                // saveHistory(history[history.length - 1], loadData.status)
-                // 現在非同期バグが発生しており、ロードしたsettingをこの形でないと反映できない。がんばれ、未来の俺！
+                startLoadedLesson(
+                  questionList,
+                  appName,
+                  loadLog(appName).logs[0].startTime
+                );
                 setTimeout(() => {
-                  // updateAllSettings(loadData.status)
-                  scrollToTop();
-                }, 2000);
+                  window.scrollTo({
+                    bottom: 0,
+                    behavior: 'smooth',
+                  });
+                }, 1000);
               }}
             >
-              続きから(あと{loadData.history.split(',').length - 1}問)
+              続きから(あと
+              {loadLog(appName).logs[0].remaining.length +
+                (loadLog(appName).logs[0].asking ? 1 : 0)}
+              問)
             </Button>
           ) : (
             <Button
@@ -237,7 +240,6 @@ export const Setting = ({
               color={'white'}
               variant="solid"
               isDisabled
-              // borderRadius={'full'}
             >
               続きから再開
             </Button>
@@ -353,7 +355,7 @@ export const Setting = ({
             w={'sm'}
             spacing={[2, 4]}
             direction={['column']}
-            bg="whiteAlpha.600"
+            bg="whiteAlpha.700"
             p={2}
             pl="4"
             mb="5"

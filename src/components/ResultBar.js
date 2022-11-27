@@ -7,7 +7,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 
-export const ResultBar = ({ log,isAnswered }) => {
+export const ResultBar = ({ log, isAnswered }) => {
   let achievementRate = Math.floor(
     (100 * (log.asked.length + (isAnswered ? 1 : 0))) /
       (log.asked.length + log.remaining.length + 1)
@@ -15,9 +15,6 @@ export const ResultBar = ({ log,isAnswered }) => {
   return (
     <>
       <Flex ml={'4'} mt={3} mb="-2" alignItems={'center'}>
-        {/* <Badge colorScheme="purple" height="100%">
-            練習モード
-          </Badge> */}
         <CircularProgress
           color="teal"
           trackColor="white"

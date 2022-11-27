@@ -12,8 +12,7 @@ import { Setting } from './components/Setting';
 import { QuestionsLog } from './components/QuestionsLog';
 import { ControlPanel } from './components/ControlPanel';
 import { useQuestionList } from './useQuestionList';
-import { useSetting } from './hooks/useSetting';
-import { useHistory } from './hooks/useHistory';
+import { useStorage } from './hooks/useStorage';
 import { useTechnicalTerm } from './useTechnicalTerm';
 import { register } from './serviceWorker';
 import { useLog } from './hooks/useLog';
@@ -26,26 +25,7 @@ function App() {
   const questionList = showQuestionList();
   const { showTechnicalTerm } = useTechnicalTerm();
   const technicalTerm = showTechnicalTerm();
-  // const {
-  //   showSettingDetail,
-  //   updateQuestionOrder,
-  //   toggleQuestionRange,
-  //   updateQuestionMode,
-  //   makeSetting,
-  //   addWordFilter,
-  //   deleteWordFilter,
-  //   updateAllSettings,
-  // } = useSetting();
-  // let settingDetail = showSettingDetail();
-  // const {
-  //   showHistory,
-  //   selectQuestionList,
-  //   nextQuestion,
-  //   checkAnswer,
-  //   reviewQuestion,
-  //   reviewAskingQuestion,
-  //   loadHistory,
-  // } = useHistory();
+  const { loadLog, saveLog } = useStorage();
   const [isAnswered, setIsAnswered] = useState(false);
   const {
     showLog,
@@ -54,37 +34,38 @@ function App() {
     startNewLesson,
     toggleReview,
     nextQuestion,
+    startLoadedLesson,
   } = useLog();
   const log = showLog();
   // const history = showHistory();
-  const thisAppNameTag = 'anywhere-prototype2';
+  const appName = 'anywhere-prototype2';
   // ここからWebStorageを利用した設定の引継ぎ
-  let loadData = {
-    app: `${thisAppNameTag}`,
-    latestUpdate: new Date().getTime(),
-  };
-  if (localStorage.getItem(thisAppNameTag)) {
-    loadData = JSON.parse(localStorage.getItem(thisAppNameTag));
-  }
-  const saveHistory = (latestHistory, newSetting) => {
-    let savingHistory = '';
-    if (latestHistory && latestHistory.remainingQuestionList) {
-      savingHistory = latestHistory.questionNum + ',';
-      latestHistory.remainingQuestionList.forEach(question => {
-        savingHistory += question.id;
-        savingHistory += ',';
-      });
-      savingHistory = savingHistory.substring(0, savingHistory.length - 1);
-    }
-    let jsonData = {
-      app: `${thisAppNameTag}`,
-      latestUpdate: new Date().getTime(),
-      status: newSetting,
-      history: savingHistory,
-    };
-    localStorage.setItem(thisAppNameTag, JSON.stringify(jsonData));
-    console.log(localStorage.getItem(thisAppNameTag));
-  };
+  // let loadData = {
+  //   app: `${thisAppNameTag}`,
+  //   latestUpdate: new Date().getTime(),
+  // };
+  // if (localStorage.getItem(thisAppNameTag)) {
+  //   loadData = JSON.parse(localStorage.getItem(thisAppNameTag));
+  // }
+  // const saveHistory = (latestHistory, newSetting) => {
+  //   let savingHistory = '';
+  //   if (latestHistory && latestHistory.remainingQuestionList) {
+  //     savingHistory = latestHistory.questionNum + ',';
+  //     latestHistory.remainingQuestionList.forEach(question => {
+  //       savingHistory += question.id;
+  //       savingHistory += ',';
+  //     });
+  //     savingHistory = savingHistory.substring(0, savingHistory.length - 1);
+  //   }
+  //   let jsonData = {
+  //     app: `${thisAppNameTag}`,
+  //     latestUpdate: new Date().getTime(),
+  //     status: newSetting,
+  //     history: savingHistory,
+  //   };
+  //   localStorage.setItem(thisAppNameTag, JSON.stringify(jsonData));
+  //   console.log(localStorage.getItem(thisAppNameTag));
+  // };
   return (
     <>
       <Heading mt={'3'} ml="3" color="teal" mb={0}>
@@ -117,12 +98,15 @@ function App() {
             selected={selected}
             setSelected={setSelected}
             questionList={questionList}
-            saveHistory={saveHistory}
             log={log}
             toggleRange={toggleRange}
             changeOrder={changeOrder}
             startNewLesson={startNewLesson}
+            startLoadedLesson={startLoadedLesson}
             technicalTerm={technicalTerm}
+            appName={appName}
+            loadLog={loadLog}
+            saveLog={saveLog}
           />
         </Box>
       )}
@@ -144,6 +128,7 @@ function App() {
             toggleReview={toggleReview}
             // saveHistory={saveHistory}
             technicalTerm={technicalTerm}
+            appName={appName}
           />
           <Box h={'300px'} width="100px"></Box>
           <ControlPanel log={log} isAnswered={isAnswered} />
