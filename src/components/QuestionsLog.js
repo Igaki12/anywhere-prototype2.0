@@ -15,7 +15,10 @@ import {
   Tooltip,
   Skeleton,
 } from '@chakra-ui/react';
-import { ArrowDownIcon, RepeatIcon, ExternalLinkIcon } from '@chakra-ui/icons';
+import {
+  ArrowDownIcon,
+  RepeatIcon,
+} from '@chakra-ui/icons';
 import { ResultBar } from './ResultBar';
 import '../App.css';
 import { useState } from 'react';
@@ -41,6 +44,7 @@ export const QuestionsLog = ({
   appName,
 }) => {
   // const toast = useToast()
+  const [renderSign, setRenderSign] = useState(0);
   const toastGoodJob = () => {
     if (log.remaining.length === 0) {
       toast({
@@ -81,6 +85,7 @@ export const QuestionsLog = ({
       )
       .groupContents.reduce((prevContent, curContent, contentI) => {
         if (contentI !== parseInt(id.slice(-3))) return prevContent;
+        // let reviewedNum = 
         let randomizedChoices = [];
         if (curContent.choices && curContent.choices.length > 0) {
           for (let i = 0; i < curContent.choices.length; i++) {
@@ -97,7 +102,7 @@ export const QuestionsLog = ({
           groupTag: log.range[parseInt(id.slice(0, 3))],
           detailInfo:
             curContent.detailInfo && curContent.detailInfo !== ''
-              ? curContent.detailInfo
+              ?  curContent.detailInfo
               : `(${contentI + 1})`,
           questionImg: curContent.questionImg ? curContent.questionImg : [],
           questionSentence: curContent.questionSentence
@@ -118,7 +123,6 @@ export const QuestionsLog = ({
         };
       }, {});
   };
-
   return (
     <>
       <ul>
@@ -140,6 +144,11 @@ export const QuestionsLog = ({
                   maxW="2xl"
                   bgColor={'white'}
                   borderWidth="1px"
+                  borderColor={
+                    log.review && log.review.indexOf(question.id) !== -1
+                      ? 'teal.800'
+                      : 'teal.100'
+                  }
                   borderRadius="lg"
                   overflow="hidden"
                   mb={1}
@@ -162,6 +171,11 @@ export const QuestionsLog = ({
                         px="2"
                         colorScheme="teal"
                         key={index + 'questionBadge'}
+                        variant={
+                          log.review && log.review.indexOf(question.id) !== -1
+                            ? 'solid'
+                            : 'subtle'
+                        }
                       >
                         {question.groupTag}
                       </Badge>
@@ -204,7 +218,11 @@ export const QuestionsLog = ({
                   maxW="2xl"
                   mb={'100px'}
                   borderWidth="2px"
-                  borderColor={'red.100'}
+                  borderColor={
+                    log.review && log.review.indexOf(question.id) !== -1
+                      ? 'red.800'
+                      : 'red.100'
+                  }
                   borderRadius="lg"
                   overflow="hidden"
                   bg={'red.100'}
@@ -248,29 +266,60 @@ export const QuestionsLog = ({
                     <Spacer />
                     <Tooltip
                       hasArrow
-                      area-label="ボタンを押すと、この質問がもう一度出題し直されます。ランダム出題の場合はランダムに、順番通り出題の場合は順番の最後に回されます。"
+                      label="もう一度このボタンを押すと、この問題が見直しリストから取り除かれます"
                       bg="gray.300"
                       color="black"
                       size={'xs'}
                     >
-                      <IconButton
-                        colorScheme={'red'}
-                        opacity="0.3"
-                        variant="ghost"
-                        aria-label="review this question"
-                        onClick={() => {
-                          toggleReview(question.id);
-                          toast({
-                            title: 'この質問はもう一度出題されます',
-                            position: 'top-right',
-                            // description: "We've created your account for you.",
-                            status: 'info',
-                            duration: 9000,
-                            isClosable: true,
-                          });
-                        }}
-                        icon={<RepeatIcon boxSize={'1.5em'} color="black" />}
-                      />
+                      {log.review && log.review.indexOf(question.id) !== -1 ? (
+                        <IconButton
+                          isActive
+                          colorScheme={'red'}
+                          opacity="1"
+                          variant="solid"
+                          aria-label="review this question"
+                          onClick={() => {
+                            toggleReview(question.id);
+                            setRenderSign(renderSign + 1);
+                            toast({
+                              title: 'この質問は見直しリストから除かれます',
+                              position: 'top-right',
+                              description: `見直しリストには他に${log.review.length}問が選択されています`,
+                              status: 'info',
+                              duration: 9000,
+                              isClosable: true,
+                            });
+                          }}
+                          icon={
+                            <RepeatIcon
+                              boxSize={'1.5em'}
+                              className="App-logo"
+                            />
+                          }
+                        />
+                      ) : (
+                        <IconButton
+                          colorScheme={'red'}
+                          opacity="0.3"
+                          variant="ghost"
+                          aria-label="review this question"
+                          onClick={() => {
+                            toggleReview(question.id);
+                            setRenderSign(renderSign + 1);
+                            toast({
+                              title: 'この質問は見直しリストに追加されました',
+                              position: 'top-right',
+                              description: `見直しリストには他に${
+                                log.review.length - 1
+                              }問が選択されています`,
+                              status: 'success',
+                              duration: 9000,
+                              isClosable: true,
+                            });
+                          }}
+                          icon={<RepeatIcon boxSize={'1.5em'} color="black" />}
+                        />
+                      )}
                     </Tooltip>
                   </Flex>
                 </Box>
@@ -290,6 +339,11 @@ export const QuestionsLog = ({
               maxW="2xl"
               bgColor={'white'}
               borderWidth="1px"
+              borderColor={
+                log.review && log.review.indexOf(question.id) !== -1
+                  ? 'teal.800'
+                  : 'teal.100'
+              }
               borderRadius="lg"
               overflow="hidden"
               mb={1}
@@ -307,7 +361,16 @@ export const QuestionsLog = ({
                 ))}
               <Box p="6">
                 <Box display="flex" alignItems="baseline">
-                  <Badge borderRadius="full" px="2" colorScheme="teal">
+                  <Badge
+                    borderRadius="full"
+                    px="2"
+                    colorScheme="teal"
+                    variant={
+                      log.review && log.review.indexOf(question.id) !== -1
+                        ? 'solid'
+                        : 'subtle'
+                    }
+                  >
                     {question.groupTag}
                   </Badge>
                   <Box
@@ -394,7 +457,11 @@ export const QuestionsLog = ({
                 <Box
                   maxW="2xl"
                   borderWidth="2px"
-                  borderColor={'red.100'}
+                  borderColor={
+                    log.review && log.review.indexOf(question.id) !== -1
+                      ? 'red.800'
+                      : 'red.100'
+                  }
                   borderRadius="lg"
                   overflow="hidden"
                   bg={'red.100'}
@@ -412,7 +479,7 @@ export const QuestionsLog = ({
                   </Box>
                   <Box p="6" pb={0}>
                     <Box display="flex" alignItems="baseline">
-                      <Badge variant="solid" colorScheme="red">
+                      <Badge variant="solid" colorScheme={'red'}>
                         解答
                       </Badge>
                       <Box
@@ -479,7 +546,7 @@ export const QuestionsLog = ({
                           ))}
                       </Box>
                     </Box>
-                    <Badge variant="solid" colorScheme="red">
+                    <Badge variant="solid" colorScheme={'red'}>
                       解説
                     </Badge>
                     <Box mt="1" as="h4" lineHeight="tight">
@@ -537,34 +604,60 @@ export const QuestionsLog = ({
                     <Spacer />
                     <Tooltip
                       hasArrow
-                      label="ボタンを押すと、この質問がもう一度出題し直されます。ランダム出題の場合はランダムに、順番通り出題の場合は順番の最後に回されます。"
+                      label="もう一度このボタンを押すと、この問題が見直しリストから取り除かれます"
                       bg="gray.300"
                       color="black"
                       size={'xs'}
                     >
-                      <IconButton
-                        colorScheme={'red'}
-                        opacity="0.3"
-                        variant="ghost"
-                        aria-label="review this question"
-                        onClick={() => {
-                          // setIsAnswered(false);
-                          // setTimeout(
-                          //   () => reviewAskingQuestion(settingDetail),
-                          //   500
-                          // );
-
-                          toast({
-                            title: 'この質問はもう一度出題されます',
-                            position: 'top-right',
-                            // description: "We've created your account for you.",
-                            status: 'info',
-                            duration: 9000,
-                            isClosable: true,
-                          });
-                        }}
-                        icon={<RepeatIcon color="black" boxSize={'1.5em'} />}
-                      />
+                      {log.review && log.review.indexOf(question.id) !== -1 ? (
+                        <IconButton
+                          isActive
+                          colorScheme={'red'}
+                          opacity="1"
+                          variant="solid"
+                          aria-label="review this question"
+                          onClick={() => {
+                            toggleReview(question.id);
+                            setRenderSign(renderSign + 1);
+                            toast({
+                              title: 'この質問は見直しリストから除かれます',
+                              position: 'top-right',
+                              description: `見直しリストには他に${log.review.length}問が選択されています`,
+                              status: 'info',
+                              duration: 9000,
+                              isClosable: true,
+                            });
+                          }}
+                          icon={
+                            <RepeatIcon
+                              boxSize={'1.5em'}
+                              className="App-logo"
+                            />
+                          }
+                        />
+                      ) : (
+                        <IconButton
+                          colorScheme={'red'}
+                          opacity="0.3"
+                          variant="ghost"
+                          aria-label="review this question"
+                          onClick={() => {
+                            toggleReview(question.id);
+                            setRenderSign(renderSign + 1);
+                            toast({
+                              title: 'この質問は見直しリストに追加されました',
+                              position: 'top-right',
+                              description: `見直しリストには他に${
+                                log.review.length - 1
+                              }問が選択されています`,
+                              status: 'success',
+                              duration: 9000,
+                              isClosable: true,
+                            });
+                          }}
+                          icon={<RepeatIcon boxSize={'1.5em'} color="black" />}
+                        />
+                      )}
                     </Tooltip>
                   </Flex>
                 </Box>

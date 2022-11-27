@@ -42,9 +42,7 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+
 }
 
 .App-header {
@@ -60,8 +58,10 @@
 
 .App-link {
   color: #61dafb;
-}
-
+}*/
+  .App-logo {
+    animation: App-logo-spin infinite 3s linear;
+  }
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -69,4 +69,18 @@
   to {
     transform: rotate(360deg);
   }
-} */
+} 
+.gradient {
+  animation: gradient 5s ease infinite;
+}
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}

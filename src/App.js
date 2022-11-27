@@ -106,7 +106,7 @@ function App() {
             technicalTerm={technicalTerm}
             appName={appName}
             loadLog={loadLog}
-            saveLog={saveLog}
+            // saveLog={saveLog}
           />
         </Box>
       )}
@@ -118,6 +118,7 @@ function App() {
             toast={toast}
             questionList={questionList}
             log={log}
+            loadLog={loadLog}
             // loadData={loadData}
             // showHistory={showHistory}
             nextQuestion={nextQuestion}

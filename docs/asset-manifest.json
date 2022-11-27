@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/anywhere-prototype2.0/static/css/main.2255ca1a.css",
-    "main.js": "/anywhere-prototype2.0/static/js/main.6f919b37.js",
+    "main.css": "/anywhere-prototype2.0/static/css/main.6180b9dc.css",
+    "main.js": "/anywhere-prototype2.0/static/js/main.e4f67de8.js",
     "static/media/220702-12.JPG": "/anywhere-prototype2.0/static/media/220702-12.0d3413670e5999c03a99.JPG",
     "static/media/220702-11.JPG": "/anywhere-prototype2.0/static/media/220702-11.14c47e14bb5f59ad6070.JPG",
     "static/media/220613-3.JPG": "/anywhere-prototype2.0/static/media/220613-3.e6fe7b9a6e43eab67c2d.JPG",
@@ -290,11 +290,11 @@
     "static/media/スクリーンショット 2022-06-21 100032.png": "/anywhere-prototype2.0/static/media/スクリーンショット 2022-06-21 100032.c0a1d1de8dd9e42658de.png",
     "static/media/スクリーンショット 2022-06-21 093853.png": "/anywhere-prototype2.0/static/media/スクリーンショット 2022-06-21 093853.a965de74c013861c4fcf.png",
     "index.html": "/anywhere-prototype2.0/index.html",
-    "main.2255ca1a.css.map": "/anywhere-prototype2.0/static/css/main.2255ca1a.css.map",
-    "main.6f919b37.js.map": "/anywhere-prototype2.0/static/js/main.6f919b37.js.map"
+    "main.6180b9dc.css.map": "/anywhere-prototype2.0/static/css/main.6180b9dc.css.map",
+    "main.e4f67de8.js.map": "/anywhere-prototype2.0/static/js/main.e4f67de8.js.map"
   },
   "entrypoints": [
-    "static/css/main.2255ca1a.css",
-    "static/js/main.6f919b37.js"
+    "static/css/main.6180b9dc.css",
+    "static/js/main.e4f67de8.js"
   ]
 }

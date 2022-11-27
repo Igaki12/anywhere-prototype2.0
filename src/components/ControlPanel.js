@@ -18,8 +18,10 @@ import {
   CircularProgressLabel,
   Flex,
   Box,
+  IconButton,
+  Center,
 } from '@chakra-ui/react';
-import { SettingsIcon, ChevronDownIcon } from '@chakra-ui/icons';
+import { SettingsIcon, ChevronDownIcon, RepeatIcon } from '@chakra-ui/icons';
 export const ControlPanel = ({ log, isAnswered }) => {
   const { isOpen, onOpen, onClose } = useDisclosure(false);
   const scrollToTheBottom = () => {
@@ -94,21 +96,21 @@ export const ControlPanel = ({ log, isAnswered }) => {
             <Tag colorScheme="teal" m={1}>
               {log.order}
             </Tag>
-            <Text>出題範囲:</Text>
+            <Text mt={2}>出題範囲:</Text>
             {log.range.map((year, index) => (
               <Tag colorScheme="teal" m="1" key={index}>
                 {year}
               </Tag>
             ))}
-            <Text>単語絞り込み:</Text>
+            <Text mt={2}>単語絞り込み:</Text>
             {log.wordFilter.map((word, index) => (
               <Tag colorScheme="teal" m="1" key={index}>
                 {word}
               </Tag>
             ))}
             <Divider orientation="horizontal" mt={3} mb="1" />
-            <Text>現在の成績:</Text>
-            <Flex ml={'4'} mt={3} mb="-2" alignItems={'center'}>
+            <Text mt={2}>現在の成績:</Text>
+            <Flex ml={'4'} mt={0} mb="3" alignItems={'center'}>
               <CircularProgress
                 color="teal"
                 trackColor="gray.200"
@@ -124,6 +126,19 @@ export const ControlPanel = ({ log, isAnswered }) => {
                   {log.remaining.length}問
                 </Text>
               </Box>
+            </Flex>
+            <Text mt={2}>見直しリスト：</Text>
+            <Flex mt={0} ml="5">
+              <IconButton
+                colorScheme={'green'}
+                opacity="0.7"
+                variant="solid"
+                aria-label="review this question"
+                icon={<RepeatIcon boxSize={'1.5em'} className="App-logo" />}
+              />
+              <Center fontWeight={'bold'} fontSize={'1em'} pl={3}>
+                × {log.review.length} 問
+              </Center>
             </Flex>
           </ModalBody>
 
