@@ -103,11 +103,17 @@ export const ControlPanel = ({ log, isAnswered }) => {
               </Tag>
             ))}
             <Text mt={2}>単語絞り込み:</Text>
-            {log.wordFilter.map((word, index) => (
-              <Tag colorScheme="teal" m="1" key={index}>
-                {word}
-              </Tag>
-            ))}
+            {log.wordFilter && log.wordFilter.length > 0 ? (
+              log.wordFilter.map((word, index) => (
+                <Tag colorScheme="teal" m="1" key={index}>
+                  {word}
+                </Tag>
+              ))
+            ) : (
+              <Text fontSize={'sm'} ml={4}>
+                なし
+              </Text>
+            )}
             <Divider orientation="horizontal" mt={3} mb="1" />
             <Text mt={2}>現在の成績:</Text>
             <Flex ml={'4'} mt={0} mb="3" alignItems={'center'}>

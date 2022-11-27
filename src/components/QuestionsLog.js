@@ -1,5 +1,3 @@
-// history[history.length - 1].askingQuestion.questionSentence
-//   .split(new RegExp('(associated)', 'g'))
 import {
   Image,
   Box,
