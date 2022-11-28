@@ -7,6 +7,8 @@ import {
   Text,
   useToast,
   Button,
+  Divider,
+  Wrap,
 } from '@chakra-ui/react';
 import { Setting } from './components/Setting';
 import { QuestionsLog } from './components/QuestionsLog';
@@ -17,6 +19,7 @@ import { useTechnicalTerm } from './useTechnicalTerm';
 import { register } from './serviceWorker';
 import { useLog } from './hooks/useLog';
 import { useState } from 'react';
+import { SearchWord } from './components/SearchWord';
 
 function App() {
   const toast = useToast();
@@ -93,8 +96,9 @@ function App() {
       {log.startTime !== '' ? (
         <></>
       ) : (
-        <Box maxW={'lg'} mr="auto" ml={'auto'}>
+        <Box mr="auto" ml={'auto'} justifyContent="center">
           <Setting
+            maxW={'lg'}
             toast={toast}
             selected={selected}
             setSelected={setSelected}
@@ -109,6 +113,24 @@ function App() {
             appName={appName}
             loadLog={loadLog}
           />
+          <Wrap justify={'center'}>
+            {/* <Box w={'xs'} bgColor="gray.700" minH={'100px'}>
+              過去の履歴
+            </Box> */}
+            <SearchWord
+              toast={toast}
+              technicalTerm={technicalTerm}
+              questionList={questionList}
+            />
+          </Wrap>
+
+          <Divider orientation="horizontal" maxW={'lg'} mt="50px" />
+          <Text fontSize="xs" textColor={'blackAlpha.700'} ml="4">
+            Supported by T.Wada
+          </Text>
+          <Text fontSize="xs" textColor={'blackAlpha.700'} ml="4">
+            ©2022- IgaTatApps
+          </Text>
         </Box>
       )}
       {log.startTime !== '' ? (

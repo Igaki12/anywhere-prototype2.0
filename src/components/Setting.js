@@ -127,6 +127,8 @@ export const Setting = ({
     <>
       <Box
         maxW="lg"
+        mr={'auto'}
+        ml="auto"
         minH={'150px'}
         transitionDelay="3s"
         className="Headline1"
@@ -351,6 +353,8 @@ export const Setting = ({
             bg="whiteAlpha.800"
             p={2}
             mb="5"
+            mr={0}
+            ml={0}
           >
             {questionList.map((group, index) => {
               return log.range.includes(group.groupTag) ? (
@@ -412,19 +416,6 @@ export const Setting = ({
           </Stack>
         </CheckboxGroup>
       </Box>
-      {/* <SearchWord
-        toast={toast}
-        // showSettingDetail={showSettingDetail}
-        // addWordFilter={addWordFilter}
-        // deleteWordFilter={deleteWordFilter}
-        // questionList={questionList}
-        // checkSelection={checkSelection}
-        technicalTerm={technicalTerm}
-      /> */}
-      <Divider orientation="horizontal" maxW={'lg'} />
-      <Text fontSize="xs" textColor={'blackAlpha.500'} ml="4">
-        ©2022- IgaTatApps
-      </Text>
     </>
   );
 };
