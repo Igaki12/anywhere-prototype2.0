@@ -25,11 +25,12 @@ function App() {
   const questionList = showQuestionList();
   const { showTechnicalTerm } = useTechnicalTerm();
   const technicalTerm = showTechnicalTerm();
-  const { loadLog, saveLog } = useStorage();
+  const { loadLog } = useStorage();
   const [isAnswered, setIsAnswered] = useState(false);
   const {
     showLog,
     toggleRange,
+    toggleAllRange,
     changeOrder,
     startNewLesson,
     toggleReview,
@@ -100,13 +101,13 @@ function App() {
             questionList={questionList}
             log={log}
             toggleRange={toggleRange}
+            toggleAllRange={toggleAllRange}
             changeOrder={changeOrder}
             startNewLesson={startNewLesson}
             startLoadedLesson={startLoadedLesson}
             technicalTerm={technicalTerm}
             appName={appName}
             loadLog={loadLog}
-            // saveLog={saveLog}
           />
         </Box>
       )}
@@ -119,15 +120,8 @@ function App() {
             questionList={questionList}
             log={log}
             loadLog={loadLog}
-            // loadData={loadData}
-            // showHistory={showHistory}
             nextQuestion={nextQuestion}
-            // checkAnswer={checkAnswer}
-            // showSettingDetail={showSettingDetail}
-            // reviewQuestion={reviewQuestion}
-            // reviewAskingQuestion={reviewAskingQuestion}
             toggleReview={toggleReview}
-            // saveHistory={saveHistory}
             technicalTerm={technicalTerm}
             appName={appName}
           />

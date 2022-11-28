@@ -44,29 +44,17 @@ export const Setting = ({
   setSelected,
   questionList,
   appName,
-  // saveLog,
   loadLog,
-  // history,
-  // saveHistory,
-  // showSettingDetail,
-  // updateQuestionOrder,
-  // toggleQuestionRange,
-  // updateQuestionMode,
-  // selectQuestionList,
-  // nextQuestion,
-  // makeSetting,
-  // addWordFilter,
-  // deleteWordFilter,
-  // updateAllSettings,
-  // loadHistory,
   log,
   technicalTerm,
   toggleRange,
+  toggleAllRange,
   changeOrder,
   startNewLesson,
   startLoadedLesson,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [renderSign, setRenderSign] = useState(0);
   // const settingDetail = showSettingDetail()
   // const [checkMsg, setCheckMsg] = useState();
   // const checkSelection = () => {
@@ -352,30 +340,75 @@ export const Setting = ({
             </Radio>
           </Stack>
         </RadioGroup>
-        <CheckboxGroup colorScheme="green" defaultValue={log.range}>
+        <CheckboxGroup
+          colorScheme="green"
+          //  defaultValue={log.range}
+        >
           <Stack
             w={'sm'}
-            spacing={[2, 4]}
+            spacing={[2, 2]}
             direction={['column']}
             bg="whiteAlpha.800"
             p={2}
-            pl="4"
             mb="5"
           >
-            {questionList.map((group, index) => (
-              <Checkbox
-                size={'lg'}
-                value={group.groupTag}
-                key={index}
-                onChange={() => {
-                  toggleRange(group.groupTag);
-                  // saveSetting(settingDetail)
+            {questionList.map((group, index) => {
+              return log.range.includes(group.groupTag) ? (
+                <Checkbox
+                  isChecked={true}
+                  bgColor={'gray.100'}
+                  size={'md'}
+                  key={index}
+                  p={2}
+                  pl="4"
+                  onChange={() => {
+                    toggleRange(group.groupTag);
+                    setRenderSign(renderSign + 1);
+                  }}
+                >
+                  {group.groupTag}(
+                  {group.groupContents ? group.groupContents.length : '0'}問)
+                </Checkbox>
+              ) : (
+                <Checkbox
+                  isChecked={false}
+                  size={'md'}
+                  key={index}
+                  p={2}
+                  pl="4"
+                  onChange={() => {
+                    toggleRange(group.groupTag);
+                    setRenderSign(renderSign + 1);
+                  }}
+                >
+                  {group.groupTag}(
+                  {group.groupContents ? group.groupContents.length : '0'}問)
+                </Checkbox>
+              );
+            })}
+
+            {questionList &&
+            log.range &&
+            questionList.every(group => log.range.includes(group.groupTag)) ? (
+              <Button
+                isActive={true}
+                onClick={() => {
+                  toggleAllRange();
+                  setRenderSign(renderSign + 1);
                 }}
               >
-                {group.groupTag}(
-                {group.groupContents ? group.groupContents.length : '0'}問)
-              </Checkbox>
-            ))}
+                すべて選択解除
+              </Button>
+            ) : (
+              <Button
+                onClick={() => {
+                  toggleAllRange(questionList);
+                  setRenderSign(renderSign + 1);
+                }}
+              >
+                すべて選択
+              </Button>
+            )}
           </Stack>
         </CheckboxGroup>
       </Box>

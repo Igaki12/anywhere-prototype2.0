@@ -28,6 +28,29 @@ export const useLog = () => {
     }
     setLog(newLog);
   };
+  const toggleAllRange = questionList => {
+    let newLog = log;
+    if (
+      questionList &&
+      questionList.every(group => {
+        return group.groupTag && group.groupContents;
+      }) &&
+      newLog.range !==
+        questionList.reduce(
+          (prevGroup, curGroup) => [...prevGroup, curGroup.groupTag],
+          []
+        )
+    ) {
+      console.log(questionList);
+      newLog.range = questionList.reduce(
+        (prevGroup, curGroup) => [...prevGroup, curGroup.groupTag],
+        []
+      );
+    } else {
+      newLog.range = [];
+    }
+    setLog(newLog);
+  };
   const changeOrder = newOrder => {
     if (newOrder === '') return;
     let newLog = log;
@@ -186,6 +209,7 @@ export const useLog = () => {
   return {
     showLog,
     toggleRange,
+    toggleAllRange,
     toggleReview,
     changeOrder,
     nextQuestion,
