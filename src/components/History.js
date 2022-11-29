@@ -15,6 +15,7 @@ import {
   Center,
   Collapse,
   Flex,
+  Progress,
   Spacer,
   Stack,
   StackDivider,
@@ -25,14 +26,14 @@ import { useState } from 'react';
 
 export const History = ({ loadLog, questionList, appName }) => {
   const [show, setShow] = useState(
-    // loadLog(appName)
-    //   .logs.filter((log, logIndex) => {
-    //     return log.startTime && (log.review !== [] || log.remaining !== []);
-    //   })
-    //   .splice(0, 10)
-    //   .map(value => true)
-    false
+    loadLog(appName)
+      .logs.filter(log => {
+        return log.startTime && (log.review !== [] || log.remaining !== []);
+      })
+      .splice(0, 10)
+      .map(value => false)
   );
+  const [renderSign, setRenderSign] = useState(0);
   return (
     <Box minH={'150px'} w="100%" p={1} pt="20px" bgColor="whiteAlpha.700">
       <Box
@@ -98,6 +99,50 @@ export const History = ({ loadLog, questionList, appName }) => {
                           '/' +
                           ('00' + date.getDate()).slice(-2)}
                       </Badge>
+                      <Center mr={2} ml="2">
+                        {' '}
+                        <Progress
+                          lineHeight="100%"
+                          w="100px"
+                          value={
+                            100 *
+                            (loadLog(appName)
+                              .logs.filter((log, index) => {
+                                return log.startTime;
+                              })
+                              .reduce((prevLog, curLog, index) => {
+                                let curDate = new Date();
+                                curDate.setTime(curLog.startTime);
+                                console.log(curLog.asked.length);
+                                if (
+                                  curDate.getMonth() === date.getMonth() &&
+                                  curDate.getDate() === date.getDate()
+                                ) {
+                                  return (
+                                    prevLog +
+                                    curLog.asked.length +
+                                    (curLog.asking ? 1 : 0)
+                                  );
+                                }
+                                return prevLog;
+                              }, 0) /
+                              loadLog(appName)
+                                .logs.filter((log, index) => {
+                                  return log.startTime;
+                                })
+                                .reduce((prevLog, curLog, index) => {
+                                  let curDate = new Date();
+                                  curDate.setTime(curLog.startTime);
+                                  console.log(curLog.asked.length);
+
+                                  return prevLog + curLog.asked.length;
+                                }, 0))
+                          }
+                          size="xs"
+                          colorScheme="green"
+                          hasStripe
+                        />
+                      </Center>
                       <Text fontSize={'xs'} ml="1">
                         {loadLog(appName)
                           .logs.filter((log, index) => {
@@ -147,7 +192,7 @@ export const History = ({ loadLog, questionList, appName }) => {
                       問選択
                     </CardHeader>
                     <CardBody pr="2" pl="2" pt="0" pb="0">
-                      <Collapse startingHeight={40} in={show}>
+                      <Collapse startingHeight={35} in={show[logIndex]}>
                         {loadLog(appName)
                           .logs.filter((log, logIndex) => {
                             return (
@@ -166,14 +211,26 @@ export const History = ({ loadLog, questionList, appName }) => {
                             );
                           })}
                       </Collapse>
-                      <Button
-                        size="sm"
-                        onClick={() => setShow(!show)}
-                        mt="0.25rem"
-                        variant={'ghost'}
-                      >
-                        Show {show ? 'Less' : 'More'}
-                      </Button>
+                      {loadLog(appName).logs.filter((log, logIndex) => {
+                        return log.startTime && (log.review || log.remaining);
+                      })[logIndex].range.length > 2 ? (
+                        <Button
+                          size="sm"
+                          onClick={() => {
+                            let newShow = show;
+                            newShow[logIndex] = !show[logIndex];
+                            console.log(newShow);
+                            setShow(newShow);
+                            setRenderSign(renderSign + 1);
+                          }}
+                          mt="0.25rem"
+                          variant={'ghost'}
+                        >
+                          Show {show[logIndex] ? 'Less' : 'More'}
+                        </Button>
+                      ) : (
+                        <></>
+                      )}
                     </CardBody>
                     <CardFooter p={3}>
                       {loadLog(appName).logs.filter((log, logIndex) => {
@@ -182,7 +239,7 @@ export const History = ({ loadLog, questionList, appName }) => {
                       loadLog(appName).logs.filter((log, logIndex) => {
                         return log.startTime && (log.review || log.remaining);
                       })[logIndex].review.length > 0 ? (
-                        <Button colorScheme={'red'} variant="solid" size="sm">
+                        <Button colorScheme={'red'} variant="outline" size="sm">
                           <RepeatIcon boxSize="1.2em" mr="0.5" />
                           {'見直し '}
                           {
