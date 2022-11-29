@@ -41,6 +41,7 @@ function App() {
     toggleReview,
     nextQuestion,
     startLoadedLesson,
+    reviewLoadedLesson,
   } = useLog();
   const log = showLog();
   // const history = showHistory();
@@ -121,6 +122,8 @@ function App() {
                 loadLog={loadLog}
                 questionList={questionList}
                 appName={appName}
+                startLoadedLesson={startLoadedLesson}
+                reviewLoadedLesson={reviewLoadedLesson}
               />
             </WrapItem>
             <WrapItem w={'sm'}>

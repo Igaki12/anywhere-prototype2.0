@@ -206,6 +206,72 @@ export const useLog = () => {
     newLog.startTime = new Date().getTime();
     saveLog(appName, newLog);
   };
+  const reviewLoadedLesson = (questionList, appName, loadedLog) => {
+    let newLog = log;
+    if (
+      loadLog(appName) &&
+      loadLog(appName).logs &&
+      loadLog(appName).logs.length > 0 &&
+      loadLog(appName).logs.find(log => {
+        if (log && log.startTime && log.remaining) {
+          return log.startTime === loadedLog.startTime;
+        }
+        return false;
+      })
+    ) {
+      newLog = loadLog(appName)
+        .logs.reduce((prevLog, curLog, index) => {
+          if (curLog && curLog.startTime) {
+            return [
+              // ...prevLog,
+              {
+                startTime: curLog.startTime,
+                order: curLog.order,
+                range: curLog.range,
+                wordFilter: curLog.wordFilter,
+                asked: [],
+                asking: '',
+                remaining: curLog.review.filter(id =>
+                  questionList.find(
+                    group =>
+                      group.groupTag ===
+                        curLog.range[parseInt(id.slice(0, 3))] &&
+                      group.groupContents.length > parseInt(id.slice(-3))
+                  )
+                ),
+                review: [],
+                // curLog.review.filter(id =>
+                //   questionList.find(
+                //     group =>
+                //       group.groupTag ===
+                //         curLog.range[parseInt(id.slice(0, 3))] &&
+                //       group.groupContents.length > parseInt(id.slice(-3))
+                //   )
+                // ),
+              },
+              ...prevLog,
+            ];
+          }
+          return prevLog;
+        }, [])
+        .find(log => {
+          if (log && log.startTime) {
+            return log.startTime === loadedLog.startTime;
+          }
+          return false;
+        });
+    } else {
+      return;
+    }
+    // if (newLog.asking === '') {
+    //   nextQuestion();
+    // }
+    nextQuestion();
+    console.log(newLog);
+    newLog.startTime = new Date().getTime();
+    setLog(newLog);
+    saveLog(appName, newLog);
+  };
   return {
     showLog,
     toggleRange,
@@ -215,5 +281,6 @@ export const useLog = () => {
     nextQuestion,
     startNewLesson,
     startLoadedLesson,
+    reviewLoadedLesson,
   };
 };

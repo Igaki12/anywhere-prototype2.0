@@ -1,4 +1,5 @@
 import {
+  ArrowDownIcon,
   CalendarIcon,
   ChevronDownIcon,
   RepeatClockIcon,
@@ -24,14 +25,21 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 
-export const History = ({ loadLog, questionList, appName }) => {
+export const History = ({
+  loadLog,
+  questionList,
+  appName,
+  startLoadedLesson,
+  reviewLoadedLesson,
+}) => {
   const [show, setShow] = useState(
-    loadLog(appName)
-      .logs.filter(log => {
-        return log.startTime && (log.review !== [] || log.remaining !== []);
-      })
-      .splice(0, 10)
-      .map(value => false)
+    // loadLog(appName)
+    //   .logs.filter(log => {
+    //     return log.startTime && (log.review !== [] || log.remaining !== []);
+    //   })
+    //   .splice(0, 10)
+    //   .map(value => false)
+    Array(15).fill(false)
   );
   const [renderSign, setRenderSign] = useState(0);
   return (
@@ -193,27 +201,19 @@ export const History = ({ loadLog, questionList, appName }) => {
                     </CardHeader>
                     <CardBody pr="2" pl="2" pt="0" pb="0">
                       <Collapse startingHeight={35} in={show[logIndex]}>
-                        {loadLog(appName)
-                          .logs.filter((log, logIndex) => {
-                            return (
-                              log.startTime && (log.review || log.remaining)
-                            );
-                          })
-                          [logIndex].range.map((tag, tagIndex) => {
-                            return (
-                              <Badge
-                                colorScheme="blackAlpha"
-                                variant="solid"
-                                mr="1"
-                              >
-                                {tag}
-                              </Badge>
-                            );
-                          })}
+                        {log.range.map((tag, tagIndex) => {
+                          return (
+                            <Badge
+                              colorScheme="blackAlpha"
+                              variant="solid"
+                              mr="1"
+                            >
+                              {tag}
+                            </Badge>
+                          );
+                        })}
                       </Collapse>
-                      {loadLog(appName).logs.filter((log, logIndex) => {
-                        return log.startTime && (log.review || log.remaining);
-                      })[logIndex].range.length > 2 ? (
+                      {log.range.length > 2 ? (
                         <Button
                           size="sm"
                           onClick={() => {
@@ -233,13 +233,19 @@ export const History = ({ loadLog, questionList, appName }) => {
                       )}
                     </CardBody>
                     <CardFooter p={3}>
-                      {loadLog(appName).logs.filter((log, logIndex) => {
-                        return log.startTime && (log.review || log.remaining);
-                      })[logIndex].review &&
-                      loadLog(appName).logs.filter((log, logIndex) => {
-                        return log.startTime && (log.review || log.remaining);
-                      })[logIndex].review.length > 0 ? (
-                        <Button colorScheme={'red'} variant="outline" size="sm">
+                      {log.review && log.review.length > 0 ? (
+                        <Button
+                          colorScheme={'red'}
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            try {
+                              reviewLoadedLesson(questionList, appName, log);
+                            } finally {
+                              setRenderSign(renderSign + 1);
+                            }
+                          }}
+                        >
                           <RepeatIcon boxSize="1.2em" mr="0.5" />
                           {'見直し '}
                           {
@@ -255,26 +261,22 @@ export const History = ({ loadLog, questionList, appName }) => {
                         <></>
                       )}
                       <Spacer />
-                      {loadLog(appName).logs.filter((log, logIndex) => {
-                        return log.startTime && (log.review || log.remaining);
-                      })[logIndex].remaining &&
-                      loadLog(appName).logs.filter((log, logIndex) => {
-                        return log.startTime && (log.review || log.remaining);
-                      })[logIndex].remaining.length > 0 ? (
+                      {log.remaining && log.remaining.length > 0 ? (
                         <Button
                           colorScheme={'green'}
                           variant="outline"
                           size="sm"
+                          onClick={() => {
+                            startLoadedLesson(
+                              questionList,
+                              appName,
+                              log.startTime
+                            );
+                          }}
                         >
+                          <ArrowDownIcon boxSize={'1.2em'} />
                           {'残り '}
-                          {
-                            loadLog(appName).logs.filter((log, logIndex) => {
-                              return (
-                                log.startTime && (log.review || log.remaining)
-                              );
-                            })[logIndex].remaining.length
-                          }
-                          問
+                          {log.remaining.length}問
                         </Button>
                       ) : (
                         <Button
@@ -293,7 +295,7 @@ export const History = ({ loadLog, questionList, appName }) => {
             })}
         </Stack>
       ) : (
-        <Center color={'black'}>履歴なし</Center>
+        <Text color={'black'}>履歴なし</Text>
       )}
     </Box>
   );
