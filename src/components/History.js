@@ -87,7 +87,7 @@ export const History = ({
                     );
                   })[logIndex - 1].startTime
                 );
-                console.log(prevDate);
+                // console.log(prevDate);
               }
               return (
                 <Box key={logIndex}>
@@ -101,6 +101,8 @@ export const History = ({
                         colorScheme={'green'}
                         variant="solid"
                         borderRadius={'full'}
+                        pr="2"
+                        pl="2"
                       >
                         {date.getMonth() +
                           1 +
@@ -108,6 +110,7 @@ export const History = ({
                           ('00' + date.getDate()).slice(-2)}
                       </Badge>
                       <Text fontSize={'xs'} mr={2} ml="1">
+                        計
                         {loadLog(appName)
                           .logs.filter((log, index) => {
                             return log.startTime;
@@ -239,14 +242,15 @@ export const History = ({
                           variant="outline"
                           size="sm"
                           onClick={() => {
-                            try {
-                              reviewLoadedLesson(questionList, appName, log);
-                            } finally {
-                              setRenderSign(renderSign + 1);
-                            }
+                            reviewLoadedLesson(
+                              questionList,
+                              appName,
+                              log.startTime
+                            );
+                            setRenderSign(renderSign + 1);
                           }}
                         >
-                          <RepeatIcon boxSize="1.2em" mr="0.5" />
+                          <RepeatIcon boxSize="1.2em" ml="-1" mr="0.5" />
                           {'見直し '}
                           {
                             loadLog(appName).logs.filter((log, logIndex) => {
@@ -274,7 +278,7 @@ export const History = ({
                             );
                           }}
                         >
-                          <ArrowDownIcon boxSize={'1.2em'} />
+                          <ArrowDownIcon boxSize={'1.2em'} mr="0.5" ml="-1" />
                           {'残り '}
                           {log.remaining.length}問
                         </Button>

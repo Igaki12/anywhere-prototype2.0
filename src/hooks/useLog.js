@@ -206,7 +206,7 @@ export const useLog = () => {
     newLog.startTime = new Date().getTime();
     saveLog(appName, newLog);
   };
-  const reviewLoadedLesson = (questionList, appName, loadedLog) => {
+  const reviewLoadedLesson = (questionList, appName, startTime) => {
     let newLog = log;
     if (
       loadLog(appName) &&
@@ -214,7 +214,7 @@ export const useLog = () => {
       loadLog(appName).logs.length > 0 &&
       loadLog(appName).logs.find(log => {
         if (log && log.startTime && log.remaining) {
-          return log.startTime === loadedLog.startTime;
+          return log.startTime === startTime;
         }
         return false;
       })
@@ -230,15 +230,32 @@ export const useLog = () => {
                 range: curLog.range,
                 wordFilter: curLog.wordFilter,
                 asked: [],
-                asking: '',
-                remaining: curLog.review.filter(id =>
+                asking: curLog.review.filter(id =>
                   questionList.find(
                     group =>
                       group.groupTag ===
                         curLog.range[parseInt(id.slice(0, 3))] &&
                       group.groupContents.length > parseInt(id.slice(-3))
                   )
-                ),
+                )[0],
+                remaining:
+                  curLog.review.filter(id =>
+                    questionList.find(
+                      group =>
+                        group.groupTag ===
+                          curLog.range[parseInt(id.slice(0, 3))] &&
+                        group.groupContents.length > parseInt(id.slice(-3))
+                    )
+                  ).length > 1
+                    ? curLog.review.filter(id =>
+                        questionList.find(
+                          group =>
+                            group.groupTag ===
+                              curLog.range[parseInt(id.slice(0, 3))] &&
+                            group.groupContents.length > parseInt(id.slice(-3))
+                        )
+                      )
+                    : [],
                 review: [],
                 // curLog.review.filter(id =>
                 //   questionList.find(
@@ -256,21 +273,17 @@ export const useLog = () => {
         }, [])
         .find(log => {
           if (log && log.startTime) {
-            return log.startTime === loadedLog.startTime;
+            return log.startTime === startTime;
           }
           return false;
         });
     } else {
       return;
     }
-    // if (newLog.asking === '') {
-    //   nextQuestion();
-    // }
-    nextQuestion();
-    console.log(newLog);
     newLog.startTime = new Date().getTime();
+    console.log(newLog);
     setLog(newLog);
-    saveLog(appName, newLog);
+    nextQuestion(appName);
   };
   return {
     showLog,
