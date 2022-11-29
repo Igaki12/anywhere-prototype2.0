@@ -315,7 +315,6 @@ export const SearchWord = ({
           minW={'sm'}
           maxW="sm"
           p="1"
-          mt="80px"
           bgColor={'whiteAlpha.800'}
           pt="20px"
         >

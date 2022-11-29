@@ -9,6 +9,7 @@ import {
   Button,
   Divider,
   Wrap,
+  WrapItem,
 } from '@chakra-ui/react';
 import { Setting } from './components/Setting';
 import { QuestionsLog } from './components/QuestionsLog';
@@ -20,6 +21,7 @@ import { register } from './serviceWorker';
 import { useLog } from './hooks/useLog';
 import { useState } from 'react';
 import { SearchWord } from './components/SearchWord';
+import { History } from './components/History.js';
 
 function App() {
   const toast = useToast();
@@ -113,15 +115,21 @@ function App() {
             appName={appName}
             loadLog={loadLog}
           />
-          <Wrap justify={'center'}>
-            {/* <Box w={'xs'} bgColor="gray.700" minH={'100px'}>
-              過去の履歴
-            </Box> */}
-            <SearchWord
-              toast={toast}
-              technicalTerm={technicalTerm}
-              questionList={questionList}
-            />
+          <Wrap justify={'center'} mt="80px">
+            <WrapItem minW={'2xs'} maxW="xs">
+              <History
+                loadLog={loadLog}
+                questionList={questionList}
+                appName={appName}
+              />
+            </WrapItem>
+            <WrapItem w={'sm'}>
+              <SearchWord
+                toast={toast}
+                technicalTerm={technicalTerm}
+                questionList={questionList}
+              />
+            </WrapItem>
           </Wrap>
 
           <Divider orientation="horizontal" maxW={'lg'} mt="50px" />
