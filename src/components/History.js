@@ -39,7 +39,7 @@ export const History = ({
     //   })
     //   .splice(0, 10)
     //   .map(value => false)
-    Array(15).fill(false)
+    Array(30).fill(false)
   );
   const [renderSign, setRenderSign] = useState(0);
   return (
@@ -299,7 +299,7 @@ export const History = ({
             })}
         </Stack>
       ) : (
-        <Text color={'black'}>履歴なし</Text>
+        <Text fontColor={'black'}>履歴なし</Text>
       )}
     </Box>
   );

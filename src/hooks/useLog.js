@@ -284,9 +284,9 @@ export const useLog = () => {
       return;
     }
     newLog.startTime = new Date().getTime();
-    console.log(newLog);
+    console.log('%PUBLIC_URL%');
     setLog(newLog);
-    nextQuestion(appName);
+    saveLog(appName, newLog);
   };
   return {
     showLog,

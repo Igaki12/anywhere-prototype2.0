@@ -135,11 +135,17 @@ function App() {
             </WrapItem>
           </Wrap>
 
-          <Divider orientation="horizontal" maxW={'lg'} mt="50px" />
-          <Text fontSize="xs" textColor={'blackAlpha.700'} ml="4">
+          <Divider
+            orientation="horizontal"
+            maxW={'lg'}
+            mt="50px"
+            mr="auto"
+            ml="auto"
+          />
+          <Text fontSize="xs" textColor={'blackAlpha.700'} textAlign="center">
             Supported by T.Wada
           </Text>
-          <Text fontSize="xs" textColor={'blackAlpha.700'} ml="4">
+          <Text fontSize="xs" textColor={'blackAlpha.700'} textAlign="center">
             ©2022- IgaTatApps
           </Text>
         </Box>
