@@ -99,7 +99,30 @@ export const History = ({ loadLog, questionList, appName }) => {
                           '/' +
                           ('00' + date.getDate()).slice(-2)}
                       </Badge>
-                      <Center mr={2} ml="2">
+                      <Text fontSize={'xs'} mr={2} ml="1">
+                        {loadLog(appName)
+                          .logs.filter((log, index) => {
+                            return log.startTime;
+                          })
+                          .reduce((prevLog, curLog, index) => {
+                            let curDate = new Date();
+                            curDate.setTime(curLog.startTime);
+                            console.log(curLog.asked.length);
+                            if (
+                              curDate.getMonth() === date.getMonth() &&
+                              curDate.getDate() === date.getDate()
+                            ) {
+                              return (
+                                prevLog +
+                                curLog.asked.length +
+                                (curLog.asking ? 1 : 0)
+                              );
+                            }
+                            return prevLog;
+                          }, 0)}
+                        問
+                      </Text>
+                      <Center>
                         {' '}
                         <Progress
                           lineHeight="100%"
@@ -140,32 +163,9 @@ export const History = ({ loadLog, questionList, appName }) => {
                           }
                           size="xs"
                           colorScheme="green"
-                          hasStripe
+                          // hasStripe
                         />
                       </Center>
-                      <Text fontSize={'xs'} ml="1">
-                        {loadLog(appName)
-                          .logs.filter((log, index) => {
-                            return log.startTime;
-                          })
-                          .reduce((prevLog, curLog, index) => {
-                            let curDate = new Date();
-                            curDate.setTime(curLog.startTime);
-                            console.log(curLog.asked.length);
-                            if (
-                              curDate.getMonth() === date.getMonth() &&
-                              curDate.getDate() === date.getDate()
-                            ) {
-                              return (
-                                prevLog +
-                                curLog.asked.length +
-                                (curLog.asking ? 1 : 0)
-                              );
-                            }
-                            return prevLog;
-                          }, 0)}
-                        問
-                      </Text>
                     </Flex>
                   )}
 
