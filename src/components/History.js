@@ -4,7 +4,7 @@ import {
   ChevronDownIcon,
   RepeatClockIcon,
   RepeatIcon,
-} from '@chakra-ui/icons';
+} from '@chakra-ui/icons'
 import {
   Badge,
   Box,
@@ -22,8 +22,8 @@ import {
   StackDivider,
   Text,
   VStack,
-} from '@chakra-ui/react';
-import { useState } from 'react';
+} from '@chakra-ui/react'
+import { useState } from 'react'
 
 export const History = ({
   loadLog,
@@ -39,9 +39,9 @@ export const History = ({
     //   })
     //   .splice(0, 10)
     //   .map(value => false)
-    Array(30).fill(false)
-  );
-  const [renderSign, setRenderSign] = useState(0);
+    Array(30).fill(false),
+  )
+  const [renderSign, setRenderSign] = useState(0)
   return (
     <Box minH={'150px'} w="100%" p={1} pt="20px" bgColor="whiteAlpha.700">
       <Box
@@ -64,29 +64,29 @@ export const History = ({
       {loadLog(appName) &&
       loadLog(appName).logs &&
       loadLog(appName).logs.filter((log, logIndex) => {
-        return log.startTime && (log.review !== [] || log.remaining !== []);
+        return log.startTime && (log.review !== [] || log.remaining !== [])
       }) ? (
         <Stack spacing="2" bgColor={'none'}>
           {loadLog(appName)
             .logs.filter((log, logIndex) => {
               return (
                 log.startTime && (log.review !== [] || log.remaining !== [])
-              );
+              )
             })
             .splice(0, 10)
             .map((log, logIndex) => {
-              let date = new Date();
-              date.setTime(log.startTime);
-              let prevDate = new Date();
+              let date = new Date()
+              date.setTime(log.startTime)
+              let prevDate = new Date()
               if (logIndex > 0) {
                 prevDate.setTime(
                   loadLog(appName).logs.filter((log, logIndex) => {
                     return (
                       log.startTime &&
                       (log.review !== [] || log.remaining !== [])
-                    );
-                  })[logIndex - 1].startTime
-                );
+                    )
+                  })[logIndex - 1].startTime,
+                )
                 // console.log(prevDate);
               }
               return (
@@ -113,12 +113,12 @@ export const History = ({
                         計
                         {loadLog(appName)
                           .logs.filter((log, index) => {
-                            return log.startTime;
+                            return log.startTime
                           })
                           .reduce((prevLog, curLog, index) => {
-                            let curDate = new Date();
-                            curDate.setTime(curLog.startTime);
-                            console.log(curLog.asked.length);
+                            let curDate = new Date()
+                            curDate.setTime(curLog.startTime)
+                            // console.log(curLog.asked.length)
                             if (
                               curDate.getMonth() === date.getMonth() &&
                               curDate.getDate() === date.getDate()
@@ -127,9 +127,9 @@ export const History = ({
                                 prevLog +
                                 curLog.asked.length +
                                 (curLog.asking ? 1 : 0)
-                              );
+                              )
                             }
-                            return prevLog;
+                            return prevLog
                           }, 0)}
                         問
                       </Text>
@@ -142,12 +142,12 @@ export const History = ({
                             100 *
                             (loadLog(appName)
                               .logs.filter((log, index) => {
-                                return log.startTime;
+                                return log.startTime
                               })
                               .reduce((prevLog, curLog, index) => {
-                                let curDate = new Date();
-                                curDate.setTime(curLog.startTime);
-                                console.log(curLog.asked.length);
+                                let curDate = new Date()
+                                curDate.setTime(curLog.startTime)
+                                // console.log(curLog.asked.length)
                                 if (
                                   curDate.getMonth() === date.getMonth() &&
                                   curDate.getDate() === date.getDate()
@@ -156,20 +156,20 @@ export const History = ({
                                     prevLog +
                                     curLog.asked.length +
                                     (curLog.asking ? 1 : 0)
-                                  );
+                                  )
                                 }
-                                return prevLog;
+                                return prevLog
                               }, 0) /
                               loadLog(appName)
                                 .logs.filter((log, index) => {
-                                  return log.startTime;
+                                  return log.startTime
                                 })
                                 .reduce((prevLog, curLog, index) => {
-                                  let curDate = new Date();
-                                  curDate.setTime(curLog.startTime);
-                                  console.log(curLog.asked.length);
+                                  let curDate = new Date()
+                                  curDate.setTime(curLog.startTime)
+                                  // console.log(curLog.asked.length)
 
-                                  return prevLog + curLog.asked.length;
+                                  return prevLog + curLog.asked.length
                                 }, 0))
                           }
                           size="xs"
@@ -187,7 +187,7 @@ export const History = ({
                       <RepeatClockIcon ml={'auto'} mr="1" boxSize={'1.2em'} />
                       {loadLog(appName)
                         .logs.filter((log, index) => {
-                          return log.startTime && (log.review || log.remaining);
+                          return log.startTime && (log.review || log.remaining)
                         })
                         .reduce((prevLog, curLog, index) => {
                           if (index === logIndex) {
@@ -196,9 +196,9 @@ export const History = ({
                               curLog.remaining.length +
                               curLog.asked.length +
                               (curLog.asking ? 1 : 0)
-                            );
+                            )
                           }
-                          return prevLog;
+                          return prevLog
                         }, 0)}
                       問選択
                     </CardHeader>
@@ -213,18 +213,18 @@ export const History = ({
                             >
                               {tag}
                             </Badge>
-                          );
+                          )
                         })}
                       </Collapse>
-                      {log.range.length > 2 ? (
+                      {log.range.length > 8 ? (
                         <Button
                           size="sm"
                           onClick={() => {
-                            let newShow = show;
-                            newShow[logIndex] = !show[logIndex];
-                            console.log(newShow);
-                            setShow(newShow);
-                            setRenderSign(renderSign + 1);
+                            let newShow = show
+                            newShow[logIndex] = !show[logIndex]
+                            console.log(newShow)
+                            setShow(newShow)
+                            setRenderSign(renderSign + 1)
                           }}
                           mt="0.25rem"
                           variant={'ghost'}
@@ -245,9 +245,9 @@ export const History = ({
                             reviewLoadedLesson(
                               questionList,
                               appName,
-                              log.startTime
-                            );
-                            setRenderSign(renderSign + 1);
+                              log.startTime,
+                            )
+                            setRenderSign(renderSign + 1)
                           }}
                         >
                           <RepeatIcon boxSize="1.2em" ml="-1" mr="0.5" />
@@ -256,7 +256,7 @@ export const History = ({
                             loadLog(appName).logs.filter((log, logIndex) => {
                               return (
                                 log.startTime && (log.review || log.remaining)
-                              );
+                              )
                             })[logIndex].review.length
                           }
                           問
@@ -274,8 +274,8 @@ export const History = ({
                             startLoadedLesson(
                               questionList,
                               appName,
-                              log.startTime
-                            );
+                              log.startTime,
+                            )
                           }}
                         >
                           <ArrowDownIcon boxSize={'1.2em'} mr="0.5" ml="-1" />
@@ -295,12 +295,12 @@ export const History = ({
                     </CardFooter>
                   </Card>
                 </Box>
-              );
+              )
             })}
         </Stack>
       ) : (
         <Text fontColor={'black'}>履歴なし</Text>
       )}
     </Box>
-  );
-};
+  )
+}

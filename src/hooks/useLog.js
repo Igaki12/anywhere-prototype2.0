@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useStorage } from './useStorage';
+import { useStorage } from './useStorage.js';
 
 export const useLog = () => {
   const { saveLog, loadLog } = useStorage();

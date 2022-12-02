@@ -1,296 +1,298 @@
-import { useState } from 'react'
-import transcription from './img/answer/transcription.png'
-import cellDivision from './img/answer/cellDivision.png'
+import { useState } from 'react';
+import transcription from './img/answer/transcription.png';
+import cellDivision from './img/answer/cellDivision.png';
 
-import q3 from './img/question/220613-3.JPG'
-import q4 from './img/question/220613-4.JPG'
-import q5 from './img/question/220613-5.JPG'
-import q6 from './img/question/220613-6.JPG'
-import q7 from './img/question/220613-7.JPG'
-import q9 from './img/question/220613-9.JPG'
-import q10 from './img/question/220613-10.JPG'
-import q11 from './img/question/220613-11.JPG'
-import q12 from './img/question/220613-12.JPG'
-import q13 from './img/question/220613-13.JPG'
-import q14 from './img/question/220613-14.JPG'
-import q19 from './img/question/220613-19.JPG'
-import q20 from './img/question/220613-20.JPG'
-import q22 from './img/question/220613-22.JPG'
-import q23 from './img/question/220613-23.JPG'
-import q24 from './img/question/220613-24.JPG'
-import qq1 from './img/question/220614-1.JPG'
-import qq2 from './img/question/220614-2.JPG'
-import qq3 from './img/question/220614-3.JPG'
-import qq4 from './img/question/220614-4.JPG'
-import qq5 from './img/question/220614-5.JPG'
-import qq7 from './img/question/220614-7.JPG'
-import qq8 from './img/question/220614-8.JPG'
-import qq9 from './img/question/220614-9.JPG'
-import qq10 from './img/question/220614-10.JPG'
-import qq11 from './img/question/220614-11.JPG'
+import q3 from './img/question/220613-3.JPG';
+import q4 from './img/question/220613-4.JPG';
+import q5 from './img/question/220613-5.JPG';
+import q6 from './img/question/220613-6.JPG';
+import q7 from './img/question/220613-7.JPG';
+import q9 from './img/question/220613-9.JPG';
+import q10 from './img/question/220613-10.JPG';
+import q11 from './img/question/220613-11.JPG';
+import q12 from './img/question/220613-12.JPG';
+import q13 from './img/question/220613-13.JPG';
+import q14 from './img/question/220613-14.JPG';
+import q19 from './img/question/220613-19.JPG';
+import q20 from './img/question/220613-20.JPG';
+import q22 from './img/question/220613-22.JPG';
+import q23 from './img/question/220613-23.JPG';
+import q24 from './img/question/220613-24.JPG';
+import qq1 from './img/question/220614-1.JPG';
+import qq2 from './img/question/220614-2.JPG';
+import qq3 from './img/question/220614-3.JPG';
+import qq4 from './img/question/220614-4.JPG';
+import qq5 from './img/question/220614-5.JPG';
+import qq7 from './img/question/220614-7.JPG';
+import qq8 from './img/question/220614-8.JPG';
+import qq9 from './img/question/220614-9.JPG';
+import qq10 from './img/question/220614-10.JPG';
+import qq11 from './img/question/220614-11.JPG';
 // 0615と0617が逆になっている
-import r1 from './img/question/220615-1.JPG'
-import r2 from './img/question/220615-2.JPG'
-import r3 from './img/question/220615-3.JPG'
-import r4 from './img/question/220615-4.JPG'
-import r5 from './img/question/220615-5.JPG'
-import r6 from './img/question/220615-6.JPG'
-import s1 from './img/question/220617-1.JPG'
-import s2 from './img/question/220617-2.JPG'
-import s3 from './img/question/220617-3.JPG'
-import s4 from './img/question/220617-4.JPG'
-import s5 from './img/question/220617-5.JPG'
-import s6 from './img/question/220617-6.JPG'
-import s7 from './img/question/220617-7.JPG'
-import s8 from './img/question/220617-8.JPG'
-import s9 from './img/question/220617-9.JPG'
-import t01 from './img/question/スクリーンショット 2022-06-21 092614.png'
-import t02 from './img/question/スクリーンショット 2022-06-21 093203.png'
-import t03 from './img/question/スクリーンショット 2022-06-21 093853.png'
-import t04 from './img/question/スクリーンショット 2022-06-21 094723.png'
-import t05 from './img/question/スクリーンショット 2022-06-21 094756.png'
-import t06 from './img/question/スクリーンショット 2022-06-21 095228.png'
-import t07 from './img/question/スクリーンショット 2022-06-21 095346.png'
-import t08 from './img/question/スクリーンショット 2022-06-21 095447.png'
-import t09 from './img/question/スクリーンショット 2022-06-21 100021.png'
-import t10 from './img/question/スクリーンショット 2022-06-21 100032.png'
-import t11 from './img/question/スクリーンショット 2022-06-21 100310.png'
-import t12 from './img/question/スクリーンショット 2022-06-21 100856.png'
-import t13 from './img/question/スクリーンショット 2022-06-21 101520.png'
-import t14 from './img/question/スクリーンショット 2022-06-21 101548.png'
-import t15 from './img/question/スクリーンショット 2022-06-21 101704.png'
-import t16 from './img/question/スクリーンショット 2022-06-21 102159.png'
-import t17 from './img/question/スクリーンショット 2022-06-21 102346.png'
-import t18 from './img/question/スクリーンショット 2022-06-21 102532.png'
-import t19 from './img/question/スクリーンショット 2022-06-21 104018.png'
-import t20 from './img/question/スクリーンショット 2022-06-21 104122.png'
-import t21 from './img/question/スクリーンショット 2022-06-21 104557.png'
-import t22 from './img/question/スクリーンショット 2022-06-21 105421.png'
-import t23 from './img/question/スクリーンショット 2022-06-21 111138.png'
-import t24 from './img/question/スクリーンショット 2022-06-21 111245.png'
-import t25 from './img/question/スクリーンショット 2022-06-21 112344.png'
-import t26 from './img/question/スクリーンショット 2022-06-21 112527.png'
-import t27 from './img/question/スクリーンショット 2022-06-21 112751.png'
-import t28 from './img/question/スクリーンショット 2022-06-21 112824.png'
-import t29 from './img/question/スクリーンショット 2022-06-21 113128.png'
-import t30 from './img/question/スクリーンショット 2022-06-21 113528.png'
-import t31 from './img/question/スクリーンショット 2022-06-21 113658.png'
-import t32 from './img/question/スクリーンショット 2022-06-21 114808.png'
-import t33 from './img/question/スクリーンショット 2022-06-21 114929.png'
-import t34 from './img/question/スクリーンショット 2022-06-21 115421.png'
-import t35 from './img/question/スクリーンショット 2022-06-21 120204.png'
-import t36 from './img/question/スクリーンショット 2022-06-21 120350.png'
-import t37 from './img/question/スクリーンショット 2022-06-21 120643.png'
-import t38 from './img/question/スクリーンショット 2022-06-21 120858.png'
-import t39 from './img/question/スクリーンショット 2022-06-21 121054.png'
-import t40 from './img/question/スクリーンショット 2022-06-21 121246.png'
-import t41 from './img/question/スクリーンショット 2022-06-21 121338.png'
-import t42 from './img/question/スクリーンショット 2022-06-21 121556.png'
-import t43 from './img/question/スクリーンショット 2022-06-21 121655.png'
-import u1032 from './img/question/スクリーンショット 2022-06-24 103227.png'
-import u1038 from './img/question/スクリーンショット 2022-06-24 103828.png'
-import u1106 from './img/question/スクリーンショット 2022-06-24 110601.png'
-import u1113 from './img/question/スクリーンショット 2022-06-24 111319.png'
-import u1130 from './img/question/スクリーンショット 2022-06-24 113055.png'
-import u1134 from './img/question/スクリーンショット 2022-06-24 113431.png'
-import u1139 from './img/question/スクリーンショット 2022-06-24 113944.png'
-import u114006 from './img/question/スクリーンショット 2022-06-24 114006.png'
-import u114018 from './img/question/スクリーンショット 2022-06-24 114018.png'
-import u1205 from './img/question/スクリーンショット 2022-06-24 120517.png'
-import u1212 from './img/question/スクリーンショット 2022-06-24 121206.png'
-import u1224 from './img/question/スクリーンショット 2022-06-24 122450.png'
-import v01 from './img/question/220702-1.JPG'
-import v02 from './img/question/220702-2.JPG'
-import v03 from './img/question/220702-3.JPG'
-import v04 from './img/question/220702-4.JPG'
-import v05 from './img/question/220702-5.JPG'
-import v06 from './img/question/220702-6.JPG'
-import v07 from './img/question/220702-7.JPG'
-import v08 from './img/question/220702-8.JPG'
-import v09 from './img/question/220702-9.JPG'
-import v10 from './img/question/220702-10.JPG'
-import v11 from './img/question/220702-11.JPG'
-import v12 from './img/question/220702-12.JPG'
-import v13 from './img/question/220702-13.JPG'
-import v14 from './img/question/220702-14.JPG'
-import v15 from './img/question/220702-15.JPG'
-import v16 from './img/question/220702-16.JPG'
-import v17 from './img/question/220702-17.JPG'
-import v18 from './img/question/220702-18.JPG'
-import v19 from './img/question/220702-19.JPG'
-import v22 from './img/question/220702-22.jpg'
-import w0931 from './img/question/スクリーンショット 2022-07-06 093143.jpg'
-import w0935 from './img/question/スクリーンショット 2022-07-06 093544.jpg'
-import w0938 from './img/question/スクリーンショット 2022-07-06 093852.jpg'
-import w0943 from './img/question/スクリーンショット 2022-07-06 094316.jpg'
-import w1000 from './img/question/スクリーンショット 2022-07-06 100035.jpg'
-import w1006 from './img/question/スクリーンショット 2022-07-06 100608.jpg'
-import w1011 from './img/question/スクリーンショット 2022-07-06 101149.jpg'
-import w1027 from './img/question/スクリーンショット 2022-07-06 102718.jpg'
-import w102715 from './img/question/スクリーンショット 2022-07-06 102755.jpg'
-import w1031 from './img/question/スクリーンショット 2022-07-06 103141.jpg'
-import w103157 from './img/question/スクリーンショット 2022-07-06 103157.jpg'
-import w1043 from './img/question/スクリーンショット 2022-07-06 104351.jpg'
-import w1045 from './img/question/スクリーンショット 2022-07-06 104524.jpg'
-import w1054 from './img/question/スクリーンショット 2022-07-06 105414.jpg'
-import w105432 from './img/question/スクリーンショット 2022-07-06 105432.jpg'
-import w1059 from './img/question/スクリーンショット 2022-07-06 105907.jpg'
-import w105927 from './img/question/スクリーンショット 2022-07-06 105927.jpg'
-import w1103 from './img/question/スクリーンショット 2022-07-06 110311.jpg'
-import w1117 from './img/question/スクリーンショット 2022-07-06 111717.jpg'
-import w1121 from './img/question/スクリーンショット 2022-07-06 112116.jpg'
-import w112149 from './img/question/スクリーンショット 2022-07-06 112149.jpg'
-import w1125 from './img/question/スクリーンショット 2022-07-06 112545.jpg'
-import w1126 from './img/question/スクリーンショット 2022-07-06 112631.jpg'
-import w1137 from './img/question/スクリーンショット 2022-07-06 113709.jpg'
-import w1138 from './img/question/スクリーンショット 2022-07-06 113825.jpg'
-import w1144 from './img/question/スクリーンショット 2022-07-06 114445.jpg'
-import w114453 from './img/question/スクリーンショット 2022-07-06 114453.jpg'
-import w1145 from './img/question/スクリーンショット 2022-07-06 114518.jpg'
-import w1152 from './img/question/スクリーンショット 2022-07-06 115237.jpg'
-import w1159 from './img/question/スクリーンショット 2022-07-06 115945.jpg'
-import w1206 from './img/question/スクリーンショット 2022-07-06 120631.jpg'
-import w1208 from './img/question/スクリーンショット 2022-07-06 120859.jpg'
-import w1212 from './img/question/スクリーンショット 2022-07-06 121256.jpg'
-import w1220 from './img/question/スクリーンショット 2022-07-06 122024.jpg'
-import w1221 from './img/question/スクリーンショット 2022-07-06 122150.jpg'
+import r1 from './img/question/220615-1.JPG';
+import r2 from './img/question/220615-2.JPG';
+import r3 from './img/question/220615-3.JPG';
+import r4 from './img/question/220615-4.JPG';
+import r5 from './img/question/220615-5.JPG';
+import r6 from './img/question/220615-6.JPG';
+import s1 from './img/question/220617-1.JPG';
+import s2 from './img/question/220617-2.JPG';
+import s3 from './img/question/220617-3.JPG';
+import s4 from './img/question/220617-4.JPG';
+import s5 from './img/question/220617-5.JPG';
+import s6 from './img/question/220617-6.JPG';
+import s7 from './img/question/220617-7.JPG';
+import s8 from './img/question/220617-8.JPG';
+import s9 from './img/question/220617-9.JPG';
+import t01 from './img/question/スクリーンショット 2022-06-21 092614.png';
+import t02 from './img/question/スクリーンショット 2022-06-21 093203.png';
+import t03 from './img/question/スクリーンショット 2022-06-21 093853.png';
+import t04 from './img/question/スクリーンショット 2022-06-21 094723.png';
+import t05 from './img/question/スクリーンショット 2022-06-21 094756.png';
+import t06 from './img/question/スクリーンショット 2022-06-21 095228.png';
+import t07 from './img/question/スクリーンショット 2022-06-21 095346.png';
+import t08 from './img/question/スクリーンショット 2022-06-21 095447.png';
+import t09 from './img/question/スクリーンショット 2022-06-21 100021.png';
+import t10 from './img/question/スクリーンショット 2022-06-21 100032.png';
+import t11 from './img/question/スクリーンショット 2022-06-21 100310.png';
+import t12 from './img/question/スクリーンショット 2022-06-21 100856.png';
+import t13 from './img/question/スクリーンショット 2022-06-21 101520.png';
+import t14 from './img/question/スクリーンショット 2022-06-21 101548.png';
+import t15 from './img/question/スクリーンショット 2022-06-21 101704.png';
+import t16 from './img/question/スクリーンショット 2022-06-21 102159.png';
+import t17 from './img/question/スクリーンショット 2022-06-21 102346.png';
+import t18 from './img/question/スクリーンショット 2022-06-21 102532.png';
+import t19 from './img/question/スクリーンショット 2022-06-21 104018.png';
+import t20 from './img/question/スクリーンショット 2022-06-21 104122.png';
+import t21 from './img/question/スクリーンショット 2022-06-21 104557.png';
+import t22 from './img/question/スクリーンショット 2022-06-21 105421.png';
+import t23 from './img/question/スクリーンショット 2022-06-21 111138.png';
+import t24 from './img/question/スクリーンショット 2022-06-21 111245.png';
+import t25 from './img/question/スクリーンショット 2022-06-21 112344.png';
+import t26 from './img/question/スクリーンショット 2022-06-21 112527.png';
+import t27 from './img/question/スクリーンショット 2022-06-21 112751.png';
+import t28 from './img/question/スクリーンショット 2022-06-21 112824.png';
+import t29 from './img/question/スクリーンショット 2022-06-21 113128.png';
+import t30 from './img/question/スクリーンショット 2022-06-21 113528.png';
+import t31 from './img/question/スクリーンショット 2022-06-21 113658.png';
+import t32 from './img/question/スクリーンショット 2022-06-21 114808.png';
+import t33 from './img/question/スクリーンショット 2022-06-21 114929.png';
+import t34 from './img/question/スクリーンショット 2022-06-21 115421.png';
+import t35 from './img/question/スクリーンショット 2022-06-21 120204.png';
+import t36 from './img/question/スクリーンショット 2022-06-21 120350.png';
+import t37 from './img/question/スクリーンショット 2022-06-21 120643.png';
+import t38 from './img/question/スクリーンショット 2022-06-21 120858.png';
+import t39 from './img/question/スクリーンショット 2022-06-21 121054.png';
+import t40 from './img/question/スクリーンショット 2022-06-21 121246.png';
+import t41 from './img/question/スクリーンショット 2022-06-21 121338.png';
+import t42 from './img/question/スクリーンショット 2022-06-21 121556.png';
+import t43 from './img/question/スクリーンショット 2022-06-21 121655.png';
+import u1032 from './img/question/スクリーンショット 2022-06-24 103227.png';
+import u1038 from './img/question/スクリーンショット 2022-06-24 103828.png';
+import u1106 from './img/question/スクリーンショット 2022-06-24 110601.png';
+import u1113 from './img/question/スクリーンショット 2022-06-24 111319.png';
+import u1130 from './img/question/スクリーンショット 2022-06-24 113055.png';
+import u1134 from './img/question/スクリーンショット 2022-06-24 113431.png';
+import u1139 from './img/question/スクリーンショット 2022-06-24 113944.png';
+import u114006 from './img/question/スクリーンショット 2022-06-24 114006.png';
+import u114018 from './img/question/スクリーンショット 2022-06-24 114018.png';
+import u1205 from './img/question/スクリーンショット 2022-06-24 120517.png';
+import u1212 from './img/question/スクリーンショット 2022-06-24 121206.png';
+import u1224 from './img/question/スクリーンショット 2022-06-24 122450.png';
+import v01 from './img/question/220702-1.JPG';
+import v02 from './img/question/220702-2.JPG';
+import v03 from './img/question/220702-3.JPG';
+import v04 from './img/question/220702-4.JPG';
+import v05 from './img/question/220702-5.JPG';
+import v06 from './img/question/220702-6.JPG';
+import v07 from './img/question/220702-7.JPG';
+import v08 from './img/question/220702-8.JPG';
+import v09 from './img/question/220702-9.JPG';
+import v10 from './img/question/220702-10.JPG';
+import v11 from './img/question/220702-11.JPG';
+import v12 from './img/question/220702-12.JPG';
+import v13 from './img/question/220702-13.JPG';
+import v14 from './img/question/220702-14.JPG';
+import v15 from './img/question/220702-15.JPG';
+import v16 from './img/question/220702-16.JPG';
+import v17 from './img/question/220702-17.JPG';
+import v18 from './img/question/220702-18.JPG';
+import v19 from './img/question/220702-19.JPG';
+import v22 from './img/question/220702-22.jpg';
+import w0931 from './img/question/スクリーンショット 2022-07-06 093143.jpg';
+import w0935 from './img/question/スクリーンショット 2022-07-06 093544.jpg';
+import w0938 from './img/question/スクリーンショット 2022-07-06 093852.jpg';
+import w0943 from './img/question/スクリーンショット 2022-07-06 094316.jpg';
+import w1000 from './img/question/スクリーンショット 2022-07-06 100035.jpg';
+import w1006 from './img/question/スクリーンショット 2022-07-06 100608.jpg';
+import w1011 from './img/question/スクリーンショット 2022-07-06 101149.jpg';
+import w1027 from './img/question/スクリーンショット 2022-07-06 102718.jpg';
+import w102715 from './img/question/スクリーンショット 2022-07-06 102755.jpg';
+import w1031 from './img/question/スクリーンショット 2022-07-06 103141.jpg';
+import w103157 from './img/question/スクリーンショット 2022-07-06 103157.jpg';
+import w1043 from './img/question/スクリーンショット 2022-07-06 104351.jpg';
+import w1045 from './img/question/スクリーンショット 2022-07-06 104524.jpg';
+import w1054 from './img/question/スクリーンショット 2022-07-06 105414.jpg';
+import w105432 from './img/question/スクリーンショット 2022-07-06 105432.jpg';
+import w1059 from './img/question/スクリーンショット 2022-07-06 105907.jpg';
+import w105927 from './img/question/スクリーンショット 2022-07-06 105927.jpg';
+import w1103 from './img/question/スクリーンショット 2022-07-06 110311.jpg';
+import w1117 from './img/question/スクリーンショット 2022-07-06 111717.jpg';
+import w1121 from './img/question/スクリーンショット 2022-07-06 112116.jpg';
+import w112149 from './img/question/スクリーンショット 2022-07-06 112149.jpg';
+import w1125 from './img/question/スクリーンショット 2022-07-06 112545.jpg';
+import w1126 from './img/question/スクリーンショット 2022-07-06 112631.jpg';
+import w1137 from './img/question/スクリーンショット 2022-07-06 113709.jpg';
+import w1138 from './img/question/スクリーンショット 2022-07-06 113825.jpg';
+import w1144 from './img/question/スクリーンショット 2022-07-06 114445.jpg';
+import w114453 from './img/question/スクリーンショット 2022-07-06 114453.jpg';
+import w1145 from './img/question/スクリーンショット 2022-07-06 114518.jpg';
+import w1152 from './img/question/スクリーンショット 2022-07-06 115237.jpg';
+import w1159 from './img/question/スクリーンショット 2022-07-06 115945.jpg';
+import w1206 from './img/question/スクリーンショット 2022-07-06 120631.jpg';
+import w1208 from './img/question/スクリーンショット 2022-07-06 120859.jpg';
+import w1212 from './img/question/スクリーンショット 2022-07-06 121256.jpg';
+import w1220 from './img/question/スクリーンショット 2022-07-06 122024.jpg';
+import w1221 from './img/question/スクリーンショット 2022-07-06 122150.jpg';
 
-import TEF from './img/answer/TEF.png'
-import glomerulus from './img/answer/glomerulus.png'
-import growingLung from './img/answer/growingLung.png'
-import growingKidney from './img/answer/growingKidney.png'
-import kidneyArtery from './img/answer/kidneyArtery.png'
-import mesonephricTubule from './img/answer/mesonephricTubule.png'
-import trigonOfBladder from './img/answer/trigoneOfBladder.png'
-import midKidney from './img/answer/midKidney.png'
-import menstrualCycle from './img/answer/menstrualCycle.png'
-import urachalFistula from './img/answer/urachalFistula.png'
-import bilaminar from './img/answer/bilaminar.png'
-import gastrulation from './img/answer/gastrulation.png'
-import LRaxis from './img/answer/LRaxis.png'
-import week3 from './img/answer/week3.png'
-import after21days from './img/answer/after21days.png'
-import after25days from './img/answer/after25days.png'
-import after29days from './img/answer/after29days.png'
-import embryoStageRisk from './img/answer/EmbryoStageRisk.png'
-import segment from './img/answer/segment.png'
-import segmentationClock from './img/answer/segmentationClock.png'
-import skull from './img/answer/skull.png'
-import after30days from './img/answer/after30days.png'
-import after4weeks from './img/answer/after4weeks.png'
-import diaphragm from './img/answer/diaphragm.png'
-import heartCavity from './img/answer/heartCavity.png'
-import pericardioperitonealCanal from './img/answer/pericardioperitonealCanal.png'
-import pleuropericardialFold from './img/answer/pleuropericardialFold.png'
-import after49days from './img/answer/after49days.png'
-import face from './img/answer/face.png'
-import meckelCartilage from './img/answer/meckelCartilage.png'
-import pharyngealArch from './img/answer/pharyngealArch.png'
-import pharyngealPouch from './img/answer/pharyngealPouch.png'
-import pharyngealTable from './img/answer/pharyngealTable.png'
-import pharyngealNerves from './img/answer/pharyngealNerves.png'
-import thymus from './img/answer/thymus.png'
-import thyroid from './img/answer/thyroid.png'
-import tongue from './img/answer/tongue.png'
-import placentalBarrier from './img/answer/placentalBarrier.png'
-import uterus from './img/answer/uterus.png'
-import branchialFistula from './img/answer/branchialFistula.png'
-import facialCleft from './img/answer/facialCleft.png'
-import after52days from './img/answer/after52days.png'
-import after52daysVentricle from './img/answer/after52daysVentricle.png'
-import after56days from './img/answer/after56days.png'
-import basalGanglia from './img/answer/basalGanglia.png'
-import brainVesicle from './img/answer/brainVesicle.png'
-import brainVesicle5 from './img/answer/brainVesicle5.png'
-import centralBrain from './img/answer/centralBrain.png'
-import diencephalon from './img/answer/diencephalon.png'
-import medullaOblongata from './img/answer/medullaOblongata.png'
-import spinalCord from './img/answer/spinalCord.png'
-import after21daysKidney from './img/answer/after21daysKidney.png'
-import after56daysPituitaryGland from './img/answer/after56daysPituitaryGland.png'
-import pituitaryGland from './img/answer/pituitaryGland.png'
-import telencephalon from './img/answer/telencephalon.png'
-import testis from './img/answer/testis.png'
-import urinaryBladder from './img/answer/urinaryBladder.png'
-import after3weeksVertical from './img/answer/after3weeksVertical.png'
-import after5weeksKidney from './img/answer/after5weeksKidney.png'
-import externalGenitalia from './img/answer/externalGenitalia.png'
-import LHFSH from './img/answer/LHFSH.png'
-import MullerianDuct from './img/answer/MullerianDuct.png'
-import ovary from './img/answer/ovary.png'
-import reproductiveRidge from './img/answer/reproductiveRidge.png'
-import sexDifferentiation from './img/answer/sexDifferentiation.png'
-import SexRelatedSignals from './img/answer/SexRelatedSignals.png'
-import testisGrowing from './img/answer/testisGrowing.png'
-import testisHormone from './img/answer/testisHormone.png'
-import testisMovement from './img/answer/testisMovement.png'
-import uterusLigament from './img/answer/uterusLigament.png'
-import after33daysLung from './img/answer/after33daysLung.png'
-import epiglottis from './img/answer/epiglottis.png'
-import larynx from './img/answer/larynx.png'
-import lungGrowing from './img/answer/lungGrowing.png'
-import tracheaEsophagusSeptum from './img/answer/tracheaEsophagusSeptum.png'
-import cochlear from './img/answer/cochlear.png'
-import cochlearWide from './img/answer/cochlearWide.png'
-import hair from './img/answer/hair.png'
-import mammaryGland from './img/answer/mammaryGland.png'
-import otocyst from './img/answer/otocyst.png'
-import otocystGrowing from './img/answer/otocystGrowing.png'
-import semicircularCanal from './img/answer/semicircularCanal.png'
-import skin from './img/answer/skin.png'
-import tooth from './img/answer/tooth.png'
-import toothRidge from './img/answer/toothRidge.png'
-import auditoryOssicles from './img/answer/auditoryOssicles.png'
-import opticCup from './img/answer/opticCup.png'
-import eyeAnatomy from './img/answer/eyeAnatomy.png'
-import eyeCup from './img/answer/eyeCup.png'
-import eyeGrowing from './img/answer/eyeGrowing.png'
-import eyeWide from './img/answer/eyeWide.png'
-import iris from './img/answer/iris.png'
-import after32days from './img/answer/after32days.png'
-import anatomicArtery from './img/answer/anatomicArtery.png'
-import aorticArch from './img/answer/aorticArch.png'
-import aorticBlockage from './img/answer/aorticBlockage.png'
-import doubleAorticArch from './img/answer/doubleAorticArch.png'
-import hematopoieticTissue from './img/answer/hematopoieticTissue.png'
-import internodeArtery from './img/answer/internodeArtery.png'
-import pulmonaryArtery from './img/answer/pulmonaryArtery.png'
-import vitellineVessel from './img/answer/vitellineVessel.png'
-import wideArtery from './img/answer/wideArtery.png'
-import arantius from './img/answer/arantius.png'
-import inferiorVenaCava from './img/answer/inferiorVenaCava.png'
-import superiorMesentericArtery from './img/answer/superiorMesentericArtery.png'
-import vein from './img/answer/vein.png'
-import adultCirculation from './img/answer/adultCirculation.png'
-import atrialSeptum from './img/answer/atrialSeptum.png'
-import cardiacAnomaly from './img/answer/cardiacAnomaly.png'
-import cardiacSeptum from './img/answer/cardiacSeptum.png'
-import cardiacSeptumMadeWithNeuralCrest from './img/answer/cardiacSeptumMadeWithNeuralCrest.png'
-import ebsteinAnomaly from './img/answer/ebsteinAnomaly.png'
-import finalVenaCava from './img/answer/finalVenaCava.png'
-import firstCardiacSeptum from './img/answer/firstCardiacSeptum.png'
-import firstHeart from './img/answer/firstHeart.png'
-import heartTube from './img/answer/heartTube.png'
-import heartLoopAnatomy from './img/answer/heartLoopAnatomy.png'
-import posteriorHeartCavity from './img/answer/posteriorHeartCavity.png'
-import secondHeart from './img/answer/secondHeart.png'
-import transPericardialSinus from './img/answer/transPericardialSinus.png'
-import transverseHeartTube from './img/answer/transverseHeartTube.png'
-import venaCava from './img/answer/venaCava.png'
-import youngVein from './img/answer/youngVein.png'
-import adultForeGut from './img/answer/adultForeGut.png'
-import ECJunction from './img/answer/ECJunction.png'
-import falciformLigament from './img/answer/falciformLigament.png'
-import foreIntestineLoop from './img/answer/foreIntestineLoop.png'
-import intestineLoop from './img/answer/intestineLoop.png'
-import midIntestineLoop from './img/answer/midIntestineLoop.png'
-import organFromIntestine from './img/answer/organFromIntestine.png'
-import pancreasBury from './img/answer/pancreasBury.png'
-import pancreasGrowing from './img/answer/pancreasGrowing.png'
+import TEF from './img/answer/TEF.png';
+import glomerulus from './img/answer/glomerulus.png';
+import growingLung from './img/answer/growingLung.png';
+import growingKidney from './img/answer/growingKidney.png';
+import kidneyArtery from './img/answer/kidneyArtery.png';
+import mesonephricTubule from './img/answer/mesonephricTubule.png';
+import trigonOfBladder from './img/answer/trigoneOfBladder.png';
+import midKidney from './img/answer/midKidney.png';
+import menstrualCycle from './img/answer/menstrualCycle.png';
+import urachalFistula from './img/answer/urachalFistula.png';
+import bilaminar from './img/answer/bilaminar.png';
+import gastrulation from './img/answer/gastrulation.png';
+import LRaxis from './img/answer/LRaxis.png';
+import week3 from './img/answer/week3.png';
+import after21days from './img/answer/after21days.png';
+import after25days from './img/answer/after25days.png';
+import after29days from './img/answer/after29days.png';
+import embryoStageRisk from './img/answer/EmbryoStageRisk.png';
+import segment from './img/answer/segment.png';
+import segmentationClock from './img/answer/segmentationClock.png';
+import skull from './img/answer/skull.png';
+import after30days from './img/answer/after30days.png';
+import after4weeks from './img/answer/after4weeks.png';
+import diaphragm from './img/answer/diaphragm.png';
+import heartCavity from './img/answer/heartCavity.png';
+import pericardioperitonealCanal from './img/answer/pericardioperitonealCanal.png';
+import pleuropericardialFold from './img/answer/pleuropericardialFold.png';
+import after49days from './img/answer/after49days.png';
+import face from './img/answer/face.png';
+import meckelCartilage from './img/answer/meckelCartilage.png';
+import pharyngealArch from './img/answer/pharyngealArch.png';
+import pharyngealPouch from './img/answer/pharyngealPouch.png';
+import pharyngealTable from './img/answer/pharyngealTable.png';
+import pharyngealNerves from './img/answer/pharyngealNerves.png';
+import thymus from './img/answer/thymus.png';
+import thyroid from './img/answer/thyroid.png';
+import tongue from './img/answer/tongue.png';
+import placentalBarrier from './img/answer/placentalBarrier.png';
+import uterus from './img/answer/uterus.png';
+import branchialFistula from './img/answer/branchialFistula.png';
+import facialCleft from './img/answer/facialCleft.png';
+import after52days from './img/answer/after52days.png';
+import after52daysVentricle from './img/answer/after52daysVentricle.png';
+import after56days from './img/answer/after56days.png';
+import basalGanglia from './img/answer/basalGanglia.png';
+import brainVesicle from './img/answer/brainVesicle.png';
+import brainVesicle5 from './img/answer/brainVesicle5.png';
+import centralBrain from './img/answer/centralBrain.png';
+import diencephalon from './img/answer/diencephalon.png';
+import medullaOblongata from './img/answer/medullaOblongata.png';
+import spinalCord from './img/answer/spinalCord.png';
+import after21daysKidney from './img/answer/after21daysKidney.png';
+import after56daysPituitaryGland from './img/answer/after56daysPituitaryGland.png';
+import pituitaryGland from './img/answer/pituitaryGland.png';
+import telencephalon from './img/answer/telencephalon.png';
+import testis from './img/answer/testis.png';
+import urinaryBladder from './img/answer/urinaryBladder.png';
+import after3weeksVertical from './img/answer/after3weeksVertical.png';
+import after5weeksKidney from './img/answer/after5weeksKidney.png';
+import externalGenitalia from './img/answer/externalGenitalia.png';
+import LHFSH from './img/answer/LHFSH.png';
+import MullerianDuct from './img/answer/MullerianDuct.png';
+import ovary from './img/answer/ovary.png';
+import reproductiveRidge from './img/answer/reproductiveRidge.png';
+import sexDifferentiation from './img/answer/sexDifferentiation.png';
+import SexRelatedSignals from './img/answer/SexRelatedSignals.png';
+import testisGrowing from './img/answer/testisGrowing.png';
+import testisHormone from './img/answer/testisHormone.png';
+import testisMovement from './img/answer/testisMovement.png';
+import uterusLigament from './img/answer/uterusLigament.png';
+import after33daysLung from './img/answer/after33daysLung.png';
+import epiglottis from './img/answer/epiglottis.png';
+import larynx from './img/answer/larynx.png';
+import lungGrowing from './img/answer/lungGrowing.png';
+import tracheaEsophagusSeptum from './img/answer/tracheaEsophagusSeptum.png';
+import cochlear from './img/answer/cochlear.png';
+import cochlearWide from './img/answer/cochlearWide.png';
+import hair from './img/answer/hair.png';
+import mammaryGland from './img/answer/mammaryGland.png';
+import otocyst from './img/answer/otocyst.png';
+import otocystGrowing from './img/answer/otocystGrowing.png';
+import semicircularCanal from './img/answer/semicircularCanal.png';
+import skin from './img/answer/skin.png';
+import tooth from './img/answer/tooth.png';
+import toothRidge from './img/answer/toothRidge.png';
+import auditoryOssicles from './img/answer/auditoryOssicles.png';
+import opticCup from './img/answer/opticCup.png';
+import eyeAnatomy from './img/answer/eyeAnatomy.png';
+import eyeCup from './img/answer/eyeCup.png';
+import eyeGrowing from './img/answer/eyeGrowing.png';
+import eyeWide from './img/answer/eyeWide.png';
+import iris from './img/answer/iris.png';
+import after32days from './img/answer/after32days.png';
+import anatomicArtery from './img/answer/anatomicArtery.png';
+import aorticArch from './img/answer/aorticArch.png';
+import aorticBlockage from './img/answer/aorticBlockage.png';
+import doubleAorticArch from './img/answer/doubleAorticArch.png';
+import hematopoieticTissue from './img/answer/hematopoieticTissue.png';
+import internodeArtery from './img/answer/internodeArtery.png';
+import pulmonaryArtery from './img/answer/pulmonaryArtery.png';
+import vitellineVessel from './img/answer/vitellineVessel.png';
+import wideArtery from './img/answer/wideArtery.png';
+import arantius from './img/answer/arantius.png';
+import inferiorVenaCava from './img/answer/inferiorVenaCava.png';
+import superiorMesentericArtery from './img/answer/superiorMesentericArtery.png';
+import vein from './img/answer/vein.png';
+import adultCirculation from './img/answer/adultCirculation.png';
+import atrialSeptum from './img/answer/atrialSeptum.png';
+import cardiacAnomaly from './img/answer/cardiacAnomaly.png';
+import cardiacSeptum from './img/answer/cardiacSeptum.png';
+import cardiacSeptumMadeWithNeuralCrest from './img/answer/cardiacSeptumMadeWithNeuralCrest.png';
+import ebsteinAnomaly from './img/answer/ebsteinAnomaly.png';
+import finalVenaCava from './img/answer/finalVenaCava.png';
+import firstCardiacSeptum from './img/answer/firstCardiacSeptum.png';
+import firstHeart from './img/answer/firstHeart.png';
+import heartTube from './img/answer/heartTube.png';
+import heartLoopAnatomy from './img/answer/heartLoopAnatomy.png';
+import posteriorHeartCavity from './img/answer/posteriorHeartCavity.png';
+import secondHeart from './img/answer/secondHeart.png';
+import transPericardialSinus from './img/answer/transPericardialSinus.png';
+import transverseHeartTube from './img/answer/transverseHeartTube.png';
+import venaCava from './img/answer/venaCava.png';
+import youngVein from './img/answer/youngVein.png';
+import adultForeGut from './img/answer/adultForeGut.png';
+import ECJunction from './img/answer/ECJunction.png';
+import falciformLigament from './img/answer/falciformLigament.png';
+import foreIntestineLoop from './img/answer/foreIntestineLoop.png';
+import intestineLoop from './img/answer/intestineLoop.png';
+import midIntestineLoop from './img/answer/midIntestineLoop.png';
+import organFromIntestine from './img/answer/organFromIntestine.png';
+import pancreasBury from './img/answer/pancreasBury.png';
+import pancreasGrowing from './img/answer/pancreasGrowing.png';
 // import from './img/answer/.png'
-import heartLoop from './img/answer/heartLoop.png'
+import heartLoop from './img/answer/heartLoop.png';
 
 export const useQuestionList = () => {
+  const appName = 'anywhere-prototype2';
+  const jpName = '発生再生学';
   const [questionList, setQuestionList] = useState([
     // ここに問題のリストを記述(選択式の場合は[0]に正解択をいれた配列をつくる)
     {
@@ -4944,11 +4946,13 @@ export const useQuestionList = () => {
         },
       ],
     },
-  ])
+  ]);
   const showQuestionList = () => {
-    return questionList
-  }
+    return questionList;
+  };
   return {
     showQuestionList,
-  }
-}
+    appName,
+    jpName,
+  };
+};
