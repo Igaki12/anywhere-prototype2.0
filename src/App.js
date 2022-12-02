@@ -61,7 +61,7 @@ function App() {
           colorScheme="teal"
           variant={'outline'}
         >
-          Ver.2.0(仮)
+          Ver.2.0
         </Badge>
         <Badge m={1} mt="0" borderRadius="full" px="2" colorScheme="teal">
           {jpName}

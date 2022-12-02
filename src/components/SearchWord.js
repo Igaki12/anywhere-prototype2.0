@@ -20,19 +20,16 @@ import {
   ModalContent,
   ModalOverlay,
   Badge,
-} from '@chakra-ui/react'
-import { ArrowDownIcon, ChevronDownIcon, SearchIcon } from '@chakra-ui/icons'
-import { useRef, useState } from 'react'
+  Highlight,
+} from '@chakra-ui/react';
+import { ArrowDownIcon, ChevronDownIcon, SearchIcon } from '@chakra-ui/icons';
+import { useRef, useState } from 'react';
 
-export const SearchWord = ({
-  toast,
-  questionList,
-  technicalTerm,
-}) => {
-  const [renderSign, setRenderSign] = useState()
-  const [inputValue, setInputValue] = useState()
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const initialRef = useRef(null)
+export const SearchWord = ({ toast, questionList, technicalTerm }) => {
+  const [renderSign, setRenderSign] = useState();
+  const [inputValue, setInputValue] = useState();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const initialRef = useRef(null);
   return (
     <>
       {technicalTerm && technicalTerm.length > 0 ? (
@@ -77,52 +74,52 @@ export const SearchWord = ({
                           prevQuestion +
                           curTermBox.term.reduce((prevTerm, curTerm) => {
                             if (prevTerm > 0) {
-                              return 1
+                              return 1;
                             } else {
                               if (
                                 question.detailInfo &&
                                 question.detailInfo.indexOf(curTerm) > -1
                               )
-                                return 1
+                                return 1;
                               else if (
                                 question.questionSentence &&
                                 question.questionSentence.indexOf(curTerm) > -1
                               )
-                                return 1
+                                return 1;
                               else if (
                                 question.answer &&
                                 question.answer.indexOf(curTerm) > -1
                               )
-                                return 1
+                                return 1;
                               else if (
                                 question.commentary &&
                                 question.commentary.indexOf(curTerm) > -1
                               )
-                                return 1
+                                return 1;
                               else if (
                                 question.choices &&
                                 question.choices.every(
-                                  (choice) => choice.indexOf(curTerm) === -1,
+                                  choice => choice.indexOf(curTerm) === -1
                                 ) === false
                               )
-                                return 1
+                                return 1;
                               else {
-                                return 0
+                                return 0;
                               }
                             }
                           }, 0)
-                        )
+                        );
                       }, 0)
-                    )
+                    );
                   }, 0),
-                }
+                };
                 let newTagArray = [...prevTermBox, newTag].sort(
-                  (a, b) => b.count - a.count,
-                )
+                  (a, b) => b.count - a.count
+                );
                 if (newTagArray.length > 15) {
-                  return newTagArray.splice(0, 15)
+                  return newTagArray.splice(0, 15);
                 } else {
-                  return newTagArray
+                  return newTagArray;
                 }
               }, [])
               .map((tag, tagIndex) => {
@@ -143,7 +140,7 @@ export const SearchWord = ({
                           duration: 30000,
                           isClosable: true,
                           position: 'top-right',
-                        })
+                        });
                       }}
                     >
                       {tag.term}
@@ -152,7 +149,7 @@ export const SearchWord = ({
                       {')'}
                     </Button>
                   </WrapItem>
-                )
+                );
               })}
             {technicalTerm && technicalTerm.length > 15 ? (
               <WrapItem p={2}>...</WrapItem>
@@ -194,9 +191,10 @@ export const SearchWord = ({
                   <Input
                     ref={initialRef}
                     value={inputValue}
-                    onChange={(event) => setInputValue(event.target.value)}
+                    onChange={event => setInputValue(event.target.value)}
                     placeholder="keyword to search for..."
                     w="xs"
+                    type={'text'}
                   />
                 </InputGroup>
 
@@ -206,15 +204,17 @@ export const SearchWord = ({
                       if (
                         inputValue &&
                         inputValue !== '' &&
+                        inputValue.indexOf('+') === -1 &&
+                        inputValue.indexOf('*') === -1 &&
                         (curGroup.term.find(
-                          (term) =>
-                            term.match(new RegExp(inputValue, 'i')) !== null,
+                          term =>
+                            term.match(new RegExp(inputValue, 'i')) !== null
                         ) ||
                           curGroup.explanation.match(
-                            new RegExp(inputValue, 'i'),
+                            new RegExp(inputValue, 'i')
                           ) !== null)
                       ) {
-                        console.log(inputValue, prevGroup)
+                        console.log(inputValue, prevGroup);
                         if (prevGroup && prevGroup.length < 10) {
                           return [
                             ...prevGroup,
@@ -232,63 +232,63 @@ export const SearchWord = ({
                                         curGroup.term.reduce(
                                           (prevTerm, curTerm) => {
                                             if (prevTerm > 0) {
-                                              return 1
+                                              return 1;
                                             } else {
                                               if (
                                                 question.detailInfo &&
                                                 question.detailInfo.indexOf(
-                                                  curTerm,
+                                                  curTerm
                                                 ) > -1
                                               )
-                                                return 1
+                                                return 1;
                                               else if (
                                                 question.questionSentence &&
                                                 question.questionSentence.indexOf(
-                                                  curTerm,
+                                                  curTerm
                                                 ) > -1
                                               )
-                                                return 1
+                                                return 1;
                                               else if (
                                                 question.answer &&
                                                 question.answer.indexOf(
-                                                  curTerm,
+                                                  curTerm
                                                 ) > -1
                                               )
-                                                return 1
+                                                return 1;
                                               else if (
                                                 question.commentary &&
                                                 question.commentary.indexOf(
-                                                  curTerm,
+                                                  curTerm
                                                 ) > -1
                                               )
-                                                return 1
+                                                return 1;
                                               else if (
                                                 question.choices &&
                                                 question.choices.every(
-                                                  (choice) =>
+                                                  choice =>
                                                     choice.indexOf(curTerm) ===
-                                                    -1,
+                                                    -1
                                                 ) === false
                                               )
-                                                return 1
+                                                return 1;
                                               else {
-                                                return 0
+                                                return 0;
                                               }
                                             }
                                           },
-                                          0,
+                                          0
                                         )
-                                      )
+                                      );
                                     },
-                                    0,
+                                    0
                                   )
-                                )
+                                );
                               }, 0),
                             },
-                          ]
+                          ];
                         }
                       }
-                      return prevGroup
+                      return prevGroup;
                     }, [])
                     .sort((a, b) => b.count - a.count)
                     .map((termGroup, termIndex) => (
@@ -308,7 +308,7 @@ export const SearchWord = ({
                             duration: 30000,
                             isClosable: true,
                             position: 'top-right',
-                          })
+                          });
                         }}
                       >
                         {termGroup.term[0].length > 15
@@ -320,17 +320,18 @@ export const SearchWord = ({
                     if (
                       inputValue &&
                       inputValue !== '' &&
+                      inputValue.indexOf('+') === -1 &&
+                      inputValue.indexOf('*') === -1 &&
                       (curTermBox.term.find(
-                        (term) =>
-                          term.match(new RegExp(inputValue, 'i')) !== null,
+                        term => term.match(new RegExp(inputValue, 'i')) !== null
                       ) ||
                         curTermBox.explanation.match(
-                          new RegExp(inputValue, 'i'),
+                          new RegExp(inputValue, 'i')
                         ) !== null)
                     ) {
-                      return [...prevTermBox, curTermBox.term[0]]
+                      return [...prevTermBox, curTermBox.term[0]];
                     }
-                    return prevTermBox
+                    return prevTermBox;
                   }, []).length > 10
                     ? '　...'
                     : ''}
@@ -339,50 +340,55 @@ export const SearchWord = ({
                     let resultList = group.groupContents.reduce(
                       (prevQuestion, curQuestion, questionIndex) => {
                         if (!inputValue) {
-                          return []
+                          return [];
+                        }
+                        if (
+                          inputValue.indexOf('+') !== -1 ||
+                          inputValue.indexOf('*') !== -1
+                        ) {
+                          return [];
                         }
                         if (
                           curQuestion.detailInfo &&
                           curQuestion.detailInfo.match(
-                            new RegExp(inputValue, 'i'),
+                            new RegExp(inputValue, 'i')
                           ) !== null
                         ) {
-                          return [...prevQuestion, curQuestion]
+                          return [...prevQuestion, curQuestion];
                         } else if (
                           curQuestion.questionSentence &&
                           curQuestion.questionSentence.match(
-                            new RegExp(inputValue, 'i'),
+                            new RegExp(inputValue, 'i')
                           ) !== null
                         ) {
-                          return [...prevQuestion, curQuestion]
+                          return [...prevQuestion, curQuestion];
                         } else if (
                           curQuestion.answer &&
                           curQuestion.answer.match(
-                            new RegExp(inputValue, 'i'),
+                            new RegExp(inputValue, 'i')
                           ) !== null
                         ) {
-                          return [...prevQuestion, curQuestion]
+                          return [...prevQuestion, curQuestion];
                         } else if (
                           curQuestion.commentary &&
                           curQuestion.commentary.match(
-                            new RegExp(inputValue, 'i'),
+                            new RegExp(inputValue, 'i')
                           ) !== null
                         ) {
-                          return [...prevQuestion, curQuestion]
+                          return [...prevQuestion, curQuestion];
                         } else if (
                           curQuestion.choices &&
                           curQuestion.choices.find(
-                            (choice) =>
-                              choice.match(new RegExp(inputValue, 'i')) !==
-                              null,
+                            choice =>
+                              choice.match(new RegExp(inputValue, 'i')) !== null
                           )
                         ) {
-                          return [...prevQuestion, curQuestion]
+                          return [...prevQuestion, curQuestion];
                         }
-                        return prevQuestion
+                        return prevQuestion;
                       },
-                      [],
-                    )
+                      []
+                    );
                     return (
                       <>
                         <Flex m={1} mt="3">
@@ -401,19 +407,24 @@ export const SearchWord = ({
                         </Flex>
                         {resultList.map((question, questionIndex) => {
                           if (questionIndex > 5) {
-                            return <></>
+                            return <></>;
                           }
                           if (questionIndex === 5) {
-                            return <Text>...</Text>
+                            return <Text>...</Text>;
                           }
                           return (
                             <Box bgColor="gray.100" fontSize="xs" mb="1" p={1}>
+                              {/* <Highlight
+                                query={initialRef}
+                                styles={{ px: '1', py: '1', bg: 'blue.100' }}
+                              > */}
                               {question.questionSentence}
+                              {/* </Highlight> */}
                             </Box>
-                          )
+                          );
                         })}
                       </>
-                    )
+                    );
                   })}
                 </Box>
               </ModalBody>
@@ -432,5 +443,5 @@ export const SearchWord = ({
         <></>
       )}
     </>
-  )
-}
+  );
+};

@@ -268,7 +268,7 @@ export const Setting = ({
             <Divider orientation="horizontal" mt={3} mb="1" />
             <Text>アップデート履歴</Text>
             <Text fontSize={'md'} fontWeight="bold" mb="2" mt={2}>
-              11-27_Ver2.0-包括的アップデート...コード部分を作り直し、WebStorageとの接続を強化、軽量化、見直しシステムの変更など
+              11-27_Ver2.0-包括的アップデート...コード部分を作り直し、WebStorageとの接続を強化、軽量化、見直しシステムの変更、検索システムの変更など
             </Text>
             <Text fontSize={'sm'}>10-03_Ver1.5-頻出キーワード確認を追加</Text>
             <Text fontSize={'sm'}>10-02_Ver1.4-キーワード検索を便利に</Text>
