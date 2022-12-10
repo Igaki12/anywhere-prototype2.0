@@ -23,12 +23,19 @@ import {
   Highlight,
 } from '@chakra-ui/react';
 import { ArrowDownIcon, ChevronDownIcon, SearchIcon } from '@chakra-ui/icons';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-export const SearchWord = ({ toast, questionList, technicalTerm }) => {
+export const SearchWord = ({
+  toast,
+  questionList,
+  technicalTerm,
+  startSelectedLesson,
+  appName,
+}) => {
   const [renderSign, setRenderSign] = useState();
-  const [inputValue, setInputValue] = useState();
+  const [inputValue, setInputValue] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();
+  useEffect(() => console.log(), [inputValue]);
   const initialRef = useRef(null);
   return (
     <>
@@ -214,7 +221,7 @@ export const SearchWord = ({ toast, questionList, technicalTerm }) => {
                             new RegExp(inputValue, 'i')
                           ) !== null)
                       ) {
-                        console.log(inputValue, prevGroup);
+                        // console.log(inputValue, prevGroup);
                         if (prevGroup && prevGroup.length < 10) {
                           return [
                             ...prevGroup,
@@ -393,6 +400,7 @@ export const SearchWord = ({ toast, questionList, technicalTerm }) => {
                       <>
                         <Flex m={1} mt="3">
                           <Badge
+                            key={groupIndex}
                             colorScheme="blue"
                             size="sm"
                             variant="solid"
@@ -430,7 +438,178 @@ export const SearchWord = ({ toast, questionList, technicalTerm }) => {
               </ModalBody>
 
               <ModalFooter mt="10" mb="200px">
-                <Button colorScheme="blue" mr={3}>
+                <Button
+                  colorScheme="blue"
+                  mr={3}
+                  onClick={() => {
+                    console.log('onClick0:', inputValue);
+                    if (!inputValue) return;
+                    let rangeIndex = -1;
+                    let selectedList = questionList.reduce(
+                      (prevGroup, group, groupIndex) => {
+                        if (
+                          group.groupContents.reduce(
+                            (prevQuestion, curQuestion, questionIndex) => {
+                              if (!inputValue) {
+                                return [];
+                              }
+                              // console.log('prevQUestion:', prevQuestion);
+                              if (
+                                inputValue.indexOf('+') !== -1 ||
+                                inputValue.indexOf('*') !== -1
+                              ) {
+                                return [];
+                              }
+                              if (
+                                curQuestion.detailInfo &&
+                                curQuestion.detailInfo.match(
+                                  new RegExp(inputValue, 'i')
+                                ) !== null
+                              ) {
+                                return [...prevQuestion, curQuestion];
+                              } else if (
+                                curQuestion.questionSentence &&
+                                curQuestion.questionSentence.match(
+                                  new RegExp(inputValue, 'i')
+                                ) !== null
+                              ) {
+                                return [...prevQuestion, curQuestion];
+                              } else if (
+                                curQuestion.answer &&
+                                curQuestion.answer.match(
+                                  new RegExp(inputValue, 'i')
+                                ) !== null
+                              ) {
+                                return [...prevQuestion, curQuestion];
+                              } else if (
+                                curQuestion.commentary &&
+                                curQuestion.commentary.match(
+                                  new RegExp(inputValue, 'i')
+                                ) !== null
+                              ) {
+                                return [...prevQuestion, curQuestion];
+                              } else if (
+                                curQuestion.choices &&
+                                curQuestion.choices.find(
+                                  choice =>
+                                    choice.match(
+                                      new RegExp(inputValue, 'i')
+                                    ) !== null
+                                )
+                              ) {
+                                return [...prevQuestion, curQuestion];
+                              }
+                              return prevQuestion;
+                            },
+                            []
+                          ).length < 1
+                        ) {
+                          return prevGroup;
+                        }
+                        rangeIndex++;
+                        return [
+                          ...prevGroup,
+                          {
+                            groupTag: group.groupTag,
+                            groupContentIds: group.groupContents.reduce(
+                              (prevQuestion, curQuestion, questionIndex) => {
+                                if (!inputValue) {
+                                  return [];
+                                }
+                                if (
+                                  inputValue.indexOf('+') !== -1 ||
+                                  inputValue.indexOf('*') !== -1
+                                ) {
+                                  return [];
+                                }
+                                if (
+                                  curQuestion.detailInfo &&
+                                  curQuestion.detailInfo.match(
+                                    new RegExp(inputValue, 'i')
+                                  ) !== null
+                                ) {
+                                  return [
+                                    ...prevQuestion,
+                                    ('000' + rangeIndex).slice(-3) +
+                                      ('000' + questionIndex).slice(-3),
+                                  ];
+                                } else if (
+                                  curQuestion.questionSentence &&
+                                  curQuestion.questionSentence.match(
+                                    new RegExp(inputValue, 'i')
+                                  ) !== null
+                                ) {
+                                  return [
+                                    ...prevQuestion,
+                                    ('000' + rangeIndex).slice(-3) +
+                                      ('000' + questionIndex).slice(-3),
+                                  ];
+                                } else if (
+                                  curQuestion.answer &&
+                                  curQuestion.answer.match(
+                                    new RegExp(inputValue, 'i')
+                                  ) !== null
+                                ) {
+                                  return [
+                                    ...prevQuestion,
+                                    ('000' + rangeIndex).slice(-3) +
+                                      ('000' + questionIndex).slice(-3),
+                                  ];
+                                } else if (
+                                  curQuestion.commentary &&
+                                  curQuestion.commentary.match(
+                                    new RegExp(inputValue, 'i')
+                                  ) !== null
+                                ) {
+                                  return [
+                                    ...prevQuestion,
+                                    ('000' + rangeIndex).slice(-3) +
+                                      ('000' + questionIndex).slice(-3),
+                                  ];
+                                } else if (
+                                  curQuestion.choices &&
+                                  curQuestion.choices.find(
+                                    choice =>
+                                      choice.match(
+                                        new RegExp(inputValue, 'i')
+                                      ) !== null
+                                  )
+                                ) {
+                                  return [
+                                    ...prevQuestion,
+                                    ('000' + rangeIndex).slice(-3) +
+                                      ('000' + questionIndex).slice(-3),
+                                  ];
+                                }
+                                return prevQuestion;
+                              },
+                              []
+                            ),
+                          },
+                        ];
+                      },
+                      []
+                    );
+                    if (selectedList.length < 1) return;
+                    startSelectedLesson(questionList, appName, {
+                      startTime: '',
+                      order: 'ascend',
+                      range: selectedList.map(group => {
+                        return group.groupTag;
+                      }),
+                      wordFilter: [inputValue],
+                      asked: [],
+                      asking: '',
+                      remaining: selectedList.reduce(
+                        (prevGroup, group, groupIndex) => {
+                          return [...prevGroup, ...group.groupContentIds];
+                        },
+                        []
+                      ),
+                      review: [],
+                    });
+                  }}
+                >
                   <ArrowDownIcon fontSize="1.2em" mr="0.5" ml="-1" />
                   問題を解く
                 </Button>

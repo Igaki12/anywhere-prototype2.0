@@ -1,4 +1,4 @@
-import './App.css'
+import './App.css';
 import {
   Box,
   Heading,
@@ -10,28 +10,28 @@ import {
   Divider,
   Wrap,
   WrapItem,
-} from '@chakra-ui/react'
-import { Setting } from './components/Setting'
-import { QuestionsLog } from './components/QuestionsLog'
-import { ControlPanel } from './components/ControlPanel'
-import { useQuestionList } from './useQuestionList'
-import { useStorage } from './hooks/useStorage'
-import { useTechnicalTerm } from './useTechnicalTerm'
-import { useLog } from './hooks/useLog'
-import { useState } from 'react'
-import { SearchWord } from './components/SearchWord'
-import { History } from './components/History.js'
-import { Suggest } from './components/Suggest'
+} from '@chakra-ui/react';
+import { Setting } from './components/Setting';
+import { QuestionsLog } from './components/QuestionsLog';
+import { ControlPanel } from './components/ControlPanel';
+import { useQuestionList } from './useQuestionList';
+import { useStorage } from './hooks/useStorage';
+import { useTechnicalTerm } from './useTechnicalTerm';
+import { useLog } from './hooks/useLog';
+import { useState } from 'react';
+import { SearchWord } from './components/SearchWord';
+import { History } from './components/History.js';
+import { Suggest } from './components/Suggest';
 
 function App() {
-  const toast = useToast()
-  const [selected, setSelected] = useState(0)
-  const { showQuestionList, appName, jpName } = useQuestionList()
-  const questionList = showQuestionList()
-  const { showTechnicalTerm } = useTechnicalTerm()
-  const technicalTerm = showTechnicalTerm()
-  const { loadLog } = useStorage()
-  const [isAnswered, setIsAnswered] = useState(false)
+  const toast = useToast();
+  const [selected, setSelected] = useState(0);
+  const { showQuestionList, appName, jpName } = useQuestionList();
+  const questionList = showQuestionList();
+  const { showTechnicalTerm } = useTechnicalTerm();
+  const technicalTerm = showTechnicalTerm();
+  const { loadLog } = useStorage();
+  const [isAnswered, setIsAnswered] = useState(false);
   const {
     showLog,
     toggleRange,
@@ -42,14 +42,22 @@ function App() {
     nextQuestion,
     startLoadedLesson,
     reviewLoadedLesson,
-  } = useLog()
-  const log = showLog()
+    startSelectedLesson,
+  } = useLog();
+  const log = showLog();
   // const appName = 'anywhere-physiology1'
   return (
     <>
-      <Heading mt={'3'} ml="3" color="teal" mb={0}>
+      <Text
+        mt={'3'}
+        ml="3"
+        color="teal"
+        mb={0}
+        fontSize="4xl"
+        fontWeight="extrabold"
+      >
         どこでも試験対策
-      </Heading>
+      </Text>
       <Flex>
         <Badge
           m={1}
@@ -91,10 +99,10 @@ function App() {
           <Wrap justify={'center'} mt="80px">
             {loadLog(appName) &&
             loadLog(appName).logs &&
-            loadLog(appName).logs.filter((log) => {
+            loadLog(appName).logs.filter(log => {
               return (
                 log.startTime && (log.review !== [] || log.remaining !== [])
-              )
+              );
             }).length > 10 ? (
               <WrapItem w={'xs'}>
                 <Suggest
@@ -120,6 +128,8 @@ function App() {
                 toast={toast}
                 technicalTerm={technicalTerm}
                 questionList={questionList}
+                startSelectedLesson={startSelectedLesson}
+                appName={appName}
               />
             </WrapItem>
           </Wrap>
@@ -157,9 +167,9 @@ function App() {
         <></>
       )}
     </>
-  )
+  );
 }
 //   )
 // }
 
-export default App
+export default App;

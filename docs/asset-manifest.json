@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/anywhere-prototype2.0/static/css/main.6180b9dc.css",
-    "main.js": "/anywhere-prototype2.0/static/js/main.f1079074.js",
+    "main.js": "/anywhere-prototype2.0/static/js/main.8a51bb3c.js",
     "static/media/220702-12.JPG": "/anywhere-prototype2.0/static/media/220702-12.0d3413670e5999c03a99.JPG",
     "static/media/220702-11.JPG": "/anywhere-prototype2.0/static/media/220702-11.14c47e14bb5f59ad6070.JPG",
     "static/media/220613-3.JPG": "/anywhere-prototype2.0/static/media/220613-3.e6fe7b9a6e43eab67c2d.JPG",
@@ -291,10 +291,10 @@
     "static/media/スクリーンショット 2022-06-21 093853.png": "/anywhere-prototype2.0/static/media/スクリーンショット 2022-06-21 093853.a965de74c013861c4fcf.png",
     "index.html": "/anywhere-prototype2.0/index.html",
     "main.6180b9dc.css.map": "/anywhere-prototype2.0/static/css/main.6180b9dc.css.map",
-    "main.f1079074.js.map": "/anywhere-prototype2.0/static/js/main.f1079074.js.map"
+    "main.8a51bb3c.js.map": "/anywhere-prototype2.0/static/js/main.8a51bb3c.js.map"
   },
   "entrypoints": [
     "static/css/main.6180b9dc.css",
-    "static/js/main.f1079074.js"
+    "static/js/main.8a51bb3c.js"
   ]
 }

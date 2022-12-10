@@ -20,7 +20,7 @@ export const useStorage = () => {
           .logs.filter(log => log && log.startTime)
           .sort((a, b) => parseInt(b.startTime) - parseInt(a.startTime)),
       };
-      console.log(loadData);
+      // console.log(loadData);
     }
     return loadData;
   };

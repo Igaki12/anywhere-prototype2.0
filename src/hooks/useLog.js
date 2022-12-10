@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useStorage } from './useStorage.js';
 
 export const useLog = () => {
@@ -14,6 +14,9 @@ export const useLog = () => {
     review: [],
     // isAnswered: false,
   });
+  useEffect(() => {
+    console.log(log);
+  }, [log]);
   // 方針：1つのボタンにつき関数１つ
   const showLog = () => {
     return log;
@@ -288,6 +291,71 @@ export const useLog = () => {
     setLog(newLog);
     saveLog(appName, newLog);
   };
+  const startSelectedLesson = (questionList, appName, selectedLog) => {
+    if (!selectedLog) return;
+    if (!appName) return;
+    if (!questionList) return;
+    if (
+      questionList.find(group => {
+        return (
+          (selectedLog.asking &&
+            selectedLog.range[parseInt(selectedLog.asking.slice(0, 3))] ===
+              group.groupTag &&
+            group.groupContents.length >
+              parseInt(selectedLog.asking.slice(-3))) ||
+          selectedLog.remaining.find(
+            id =>
+              group.groupTag === selectedLog.range[parseInt(id.slice(0, 3))] &&
+              group.groupContents.length > parseInt(id.slice(-3))
+          )
+        );
+      })
+    ) {
+      selectedLog.startTime = new Date().getTime();
+      selectedLog.range = selectedLog.range.filter(range =>
+        questionList.find(group => group.groupTag === range)
+      );
+      selectedLog.order === 'random'
+        ? (selectedLog.order = 'random')
+        : (selectedLog.order = 'ascend');
+      selectedLog.asked = selectedLog.asked.filter(id =>
+        questionList.find(
+          group =>
+            group.groupTag === selectedLog.range[parseInt(id.slice(0, 3))] &&
+            group.groupContents.length > parseInt(id.slice(-3))
+        )
+      );
+      selectedLog.asking = questionList.find(
+        group =>
+          group.groupTag ===
+            selectedLog.range[parseInt(selectedLog.asking.slice(0, 3))] &&
+          group.groupContents.length > parseInt(selectedLog.asking.slice(-3))
+      )
+        ? selectedLog.asking
+        : '';
+      selectedLog.remaining = selectedLog.remaining.filter(id =>
+        questionList.find(
+          group =>
+            group.groupTag === selectedLog.range[parseInt(id.slice(0, 3))] &&
+            group.groupContents.length > parseInt(id.slice(-3))
+        )
+      );
+      selectedLog.review = selectedLog.review.filter(id =>
+        questionList.find(
+          group =>
+            group.groupTag === selectedLog.range[parseInt(id.slice(0, 3))] &&
+            group.groupContents.length > parseInt(id.slice(-3))
+        )
+      );
+      if (selectedLog.asking === '') {
+        selectedLog.asking = selectedLog.remaining[0];
+        selectedLog.remaining.shift();
+      }
+      console.log(selectedLog);
+      setLog(selectedLog);
+      saveLog(appName, selectedLog);
+    }
+  };
   return {
     showLog,
     toggleRange,
@@ -298,5 +366,6 @@ export const useLog = () => {
     startNewLesson,
     startLoadedLesson,
     reviewLoadedLesson,
+    startSelectedLesson,
   };
 };
